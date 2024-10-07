@@ -33,7 +33,6 @@ class Game:
         
     def setup(self):
         map = load_pygame(join('data', 'tmx', 'testmap6.tmx'))
-        print(map)
         # Phóng to các tile của layer map
         for x, y, image in map.get_layer_by_name('Tile Layer 1').tiles():
             # Phóng to hình ảnh

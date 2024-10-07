@@ -39,17 +39,18 @@ class AnimatedSprite(Sprites):
             self.animation_speed = 5
 
 class Enermy(AnimatedSprite):
-    def __init__(self, pos, enermy_frames, groups):
-        super().__init__(pos, enermy_frames, groups)
+    def __init__(self, pos, frames, groups):
+        super().__init__(pos, frames, groups)
+        self.flip = False
 
     def update(self, dt):
         self.move(dt)
-        self.animate(dt, flip = False)
         self.constraint()
+        self.animate(dt, flip = self.flip)
 
 class Skeleton(Enermy):
-    def __init__(self, rect, enermy_frames, groups, speed):
-        super().__init__(rect.topleft, enermy_frames, groups) 
+    def __init__(self, rect, frames, groups, speed):
+        super().__init__(rect.topleft, frames, groups) 
         self.rect.bottomleft = rect.bottomleft
         self.main_rect = rect                       #hình chữ nhật giới hạn di chuyển
         self.speed = speed
@@ -57,14 +58,18 @@ class Skeleton(Enermy):
 
     def move(self, dt):
         self.rect.x += self.direction * self.speed * dt
-    
+
     def constraint(self):
-        if self.rect.left < self.main_rect.left or self.rect.right > self.main_rect.right:
+        if self.rect.left < self.main_rect.left:
             self.direction *= -1
+            self.flip = False
+        if self.rect.right > self.main_rect.right:
+            self.direction *= -1
+            self.flip = True
 
 class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thuộc tính cơ bản cho 1 sprite
-    def __init__(self, pos, groups, collision_sprites, player_frames):
-        super().__init__(pos, player_frames, groups)    #thêm đối tượng Player vào group được truyền vào//super để gọi phương thức của lớp cha là pygame.sprite.Sprite
+    def __init__(self, pos, groups, collision_sprites, frames):
+        super().__init__(pos, frames, groups)    #super() ->gọi lớp cha, super().init ở đây là khi truyền vào init của player sẽ tạo các thuộc tính trong lớp cha là animated
         
         #collision
         self.collision_sprite = collision_sprites
@@ -110,7 +115,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.collision('vertical')
         self.rect.center = self.hitbox_rect.center                    #cập nhật lại tâm của rect theo tâm của hitbox
     
-    def animate(self, dt):
+    def animated(self, dt):
         if self.attack:
             self.set_state('attack')
         elif self.direction.x == 0 and self.can_jump:  #Nhân vật đứng yên và có thể nhảy
@@ -156,4 +161,4 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.check_floor()
         self.input()
         self.move(dt)
-        self.animate(dt)
+        self.animated(dt)

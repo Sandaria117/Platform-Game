@@ -100,7 +100,7 @@
   <object id="6" name="Player" x="35.9773" y="1394.81">
    <point/>
   </object>
-  <object id="23" name="Skeleton" x="235.833" y="1280.83" width="129.167" height="34.1667"/>
-  <object id="24" name="Skeleton" x="409.167" y="1201.67" width="113.333" height="40"/>
+  <object id="23" name="Skeleton" x="235.833" y="1271.4" width="129.167" height="43.6007"/>
+  <object id="24" name="Skeleton" x="409.167" y="1197.9" width="113.333" height="43.7736"/>
  </objectgroup>
 </map>
