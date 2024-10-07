@@ -27,7 +27,7 @@ class AnimatedSprite(Sprites):
         if flip == True:
             self.image = pygame.transform.flip(self.image, True, False)
 
-    def set_state(self, new_state):
+    def set_state(self, new_state): 
         # Đổi trạng thái animation
         if new_state != self.current_state:
             self.current_state = new_state
@@ -42,6 +42,9 @@ class Enermy(AnimatedSprite):
     def __init__(self, pos, frames, groups):
         super().__init__(pos, frames, groups)
         self.flip = False
+
+    def destroy(self):
+        self.kill()
 
     def update(self, dt):
         self.move(dt)
@@ -84,7 +87,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
-        self.hitbox_attack = pygame.Rect((0,0), (30, self.hitbox_rect.height)) 
+        self.hitbox_attack = pygame.Rect((0,0), (40, self.hitbox_rect.height)) 
 
         #timer
         self.attack_cooldown = Timer(1000)
@@ -103,6 +106,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             self.flip = True
         if keys[pygame.K_UP] and self.can_jump:
             self.direction.y = -20 
+        self.flip_hitbox_attack()   #cập nhật hướng hitbox
 
     def move(self, dt):
         #ngang 
@@ -115,6 +119,18 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.collision('vertical')
         self.rect.center = self.hitbox_rect.center                    #cập nhật lại tâm của rect theo tâm của hitbox
     
+    def flip_hitbox_attack(self):
+        if self.flip:
+            self.hitbox_attack.midright = self.hitbox_rect.midleft
+        else: 
+            self.hitbox_attack.midleft = self.hitbox_rect.midright
+    
+    def get_attack_frame(self):
+        #Trả về chỉ số frame của animation tấn công hiện tại ->mượt hơn
+        if self.current_state == 'attack':
+            return int(self.frame_index)
+        return -1
+
     def animated(self, dt):
         if self.attack:
             self.set_state('attack')
@@ -126,7 +142,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             self.set_state('jump')
         
         # Gọi hàm animate của lớp AnimatedSprite để cập nhật animation
-        super().animate(dt, flip = self.flip)
+        self.animate(dt, flip = self.flip)
         
     def check_floor(self):
         #tạo 1 hình chữ nhật bé tý sát dưới hitbox nhân vật để kiểm tra xem có va chạm với nền không
@@ -154,6 +170,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
                         self.hitbox_rect.top = sprite.rect.bottom  
                     self.direction.y = 0   #va chạm ở trên -> vector chuyển động mất ngay -> trọng lực kéo xuống mượt
 
+
     def update(self, dt):
         self.attack_cooldown.update()
         if self.attack_cooldown.active == False:
@@ -162,3 +179,14 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.input()
         self.move(dt)
         self.animated(dt)
+
+class Coin(AnimatedSprite):
+    def __init__(self, pos, frames, groups):
+        super().__init__(pos, frames, groups)
+
+    def destroy(self):
+        self.kill()
+    
+    def update(self, dt):
+        self.animation_speed = 10
+        self.animate(dt, False)
