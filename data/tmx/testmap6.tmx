@@ -184,7 +184,7 @@
   <object id="6" name="Player" x="690.695" y="1085.38">
    <point/>
   </object>
-  <object id="23" name="Skeleton1" x="222.833" y="1172.4" width="142.167" height="142.601"/>
+  <object id="23" name="Skeleton1" x="222.833" y="1172.4" width="152.167" height="142.601"/>
   <object id="24" name="Skeleton" x="409.167" y="1197.9" width="113.333" height="43.7736"/>
   <object id="36" name="Skeleton" x="33.0189" y="1318.87" width="177.358" height="81.1321"/>
   <object id="37" name="Coin" x="293.396" y="1123.58">

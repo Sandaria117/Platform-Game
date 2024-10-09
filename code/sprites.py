@@ -170,7 +170,11 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         if keys[pygame.K_q]:
             self.is_attacking = True
         
-        self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        # self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        if self.can_jump:
+            self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        else:
+            self.direction.x = (int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])) * 0.75
         if keys[pygame.K_RIGHT]:
             self.flip = False
         elif keys[pygame.K_LEFT]:
