@@ -18,6 +18,9 @@ class AnimatedSprite(Sprites):
         self.is_attacking = False
         self.is_death = False
         self.is_hurt = False
+        # cờ kiểm tra loại đối tượng
+        self.is_player = False
+        self.is_enermy = False
         
         super().__init__(pos, self.frames[self.current_state][self.frame_index], groups)
     
@@ -33,8 +36,11 @@ class AnimatedSprite(Sprites):
             elif self.current_state == 'attack':
                 self.is_attacking = False  # Dừng trạng thái 'attack'
             elif self.current_state == 'death':
-                self.kill()  # Có thể kill đối tượng khi 'death' kết thúc
-
+                if self.is_player:
+                    self.respawn()
+                elif self.is_enermy:
+                    self.kill()  # Có thể kill đối tượng khi 'death' kết thúc
+                
         # Cập nhật ảnh hiện tại từ trạng thái hiện tại
         self.image = self.frames[self.current_state][int(self.frame_index)]
         if flip == True:
@@ -56,6 +62,7 @@ class Enermy(AnimatedSprite):
     def __init__(self, pos, frames, groups):
         super().__init__(pos, frames, groups)
         self.flip = False
+        self.is_enermy = True
 
     def destroy(self):
         self.kill()
@@ -70,6 +77,7 @@ class Skeleton1(Enermy):
         self.speed = 100
         self.direction = 0
         self.follow = False
+        self.enermy_hp = 3
 
         self.player_sprite = player_sprite
 
@@ -112,12 +120,14 @@ class Skeleton1(Enermy):
         for player in self.player_sprite:
             if player.hitbox_rect.colliderect(self.main_rect):# and player.is_death == False:
                 self.follow = True
-                if player.rect.x > self.rect.x:
-                    self.flip = False
-                    self.direction = 1
-                else: 
-                    self.flip = True
-                    self.direction = -1
+                distance_x = player.rect.x - self.rect.x  # khoảng cách để không bị flip liên tục
+                if abs(distance_x) > 15:
+                    if player.rect.x > self.rect.x:
+                        self.flip = False
+                        self.direction = 1
+                    else: 
+                        self.flip = True
+                        self.direction = -1
             else:
                 self.follow = False
                 # self.direction = 0
@@ -165,6 +175,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
     def __init__(self, pos, groups, collision_sprites, frames):
         super().__init__(pos, frames, groups)    #super() ->gọi lớp cha, super().init ở đây là khi truyền vào init của player sẽ tạo các thuộc tính trong lớp cha là animated
         
+        self.is_player = True
         #collision
         self.collision_sprite = collision_sprites
         
@@ -176,6 +187,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         #animate
         self.flip = False
         
+        self.respawn_point = pos
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
         self.hitbox_attack = pygame.Rect((0,0), (40, self.hitbox_rect.height)) 
@@ -265,6 +277,14 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
                     if self.direction.y < 0: 
                         self.hitbox_rect.top = sprite.rect.bottom  
                     self.direction.y = 0   #va chạm ở trên -> vector chuyển động mất ngay -> trọng lực kéo xuống mượt
+    ###
+    def die(self):
+        self.is_death = True
+    
+    def respawn(self):
+        self.hitbox_rect.center = self.respawn_point
+        self.is_death = False
+        
 
     def update(self, dt):
         if self.is_death == False:
@@ -283,3 +303,16 @@ class Coin(AnimatedSprite):
     def update(self, dt):
         self.animation_speed = 10
         self.animate(dt, False)
+
+class Checkpoint(AnimatedSprite):
+    def __init__(self, pos, frames, groups):
+        super().__init__(pos, frames, groups)
+        self.active = False
+
+    def activate(self, player):
+        player.respawn_point = self.rect.center
+
+    def update(self, dt):
+        self.animation_speed = 10
+        self.animate(dt, False)
+        
