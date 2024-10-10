@@ -2,7 +2,7 @@ from settings import *
 from sprites import *
 from groups import *
 from support import * 
-from enemy import *
+from timer import *
 
 class Game:
     def __init__(self):
@@ -25,13 +25,14 @@ class Game:
         self.import_assets()
         self.setup() #import bên map vào
         
-        #score
+        #score, hp
         self.score = 0
-        self.hp = 5
+        self.player_hp = 5
+        self.enermy_hp = 5
         self.font = pygame.font.Font(None, 36)  #tạo 1 font obj -> font in chữ ra màn
 
         #cooldown
-        self.cooldown_hp = Timer(200)
+        self.cooldown_hp = Timer(500)   #sau 0,5s thì mới có thể ăn dmg lần nữa
     
     def import_assets(self):
         self.player_frames = {
@@ -40,7 +41,7 @@ class Game:
             'jump': import_folder64x64('images','player2','jump'),
             'attack': import_folder64x64('images','player2','attack'),
             'death': import_folder64x64('images','player2','death'),
-            'disappear': import_folder64x64('images','player2','disappear')
+            'hurt': import_folder64x64('images','player2','hurt')
         }
         self.skeleton_frames = {
             'walk': import_folder64x64('images','enermy','skeleton','walk'),    
@@ -81,28 +82,49 @@ class Game:
                 Skeleton1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.player_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites)
                 
     def check_attack_collision(self):
-        if self.player.get_attack_frame() == 4:
-        # if self.player.is_attacking:
-            for enermy in self.enermy_sprites:
-                if self.player.hitbox_attack.colliderect(enermy.hitbox_rect):
-                    enermy.destroy() 
+        #mình đấm quái
+        # if self.player.get_attack_frame() == 4:
+        #     for enermy in self.enermy_vip_sprites:
+        #         if self.player.hitbox_attack.colliderect(enermy.hitbox_rect):
+        #             enermy.destroy() 
+
+        for enermy in self.enermy_vip_sprites:
+            if self.player.hitbox_attack.colliderect(enermy.hitbox_rect) and self.player.get_attack_frame() == 4:
+                if self.cooldown_hp.active == False:
+                    # enermy.kill()
+                    self.enermy_hp -= 1
+                    self.cooldown_hp.activate()
+                    enermy.is_hurt = True
+                    if self.enermy_hp == 0:
+                        enermy.is_death = True
+                        break
+            self.cooldown_hp.update()
+                
+        #coincard
         for coin in self.coin_sprites:
             if self.player.hitbox_rect.colliderect(coin.rect):
                 coin.destroy()
                 self.score += 1
-        #quái 
+        #quái đấm mình
         for enermy in self.enermy_vip_sprites:
             if self.player.hitbox_rect.colliderect(enermy.hitbox_attack) and enermy.get_attack_frame() == 4:
                 if self.cooldown_hp.active == False:
-                    self.hp -= 1
+                    self.player_hp -= 1
                     self.cooldown_hp.activate()
+                    self.player.is_hurt = True
+                    if self.player_hp == 0:
+                        self.player.is_death = True
+                        break
             self.cooldown_hp.update()
 
         for enermy in self.enermy_sprites:
             if self.player.hitbox_rect.colliderect(enermy.rect):
                 if self.cooldown_hp.active == False:
-                    self.hp -= 1
+                    self.player_hp -= 1
                     self.cooldown_hp.activate()
+                    if self.player_hp == 0:
+                        self.player.is_death = True
+                        break
             self.cooldown_hp.update()
             
         # sprite_collision = pygame.sprite.spritecollide(self.player, self.enermy_sprites, False, pygame.sprite.collide_mask)
@@ -125,20 +147,13 @@ class Game:
             #draw
             self.display_surface.fill(BACKGROUND_COLOR)
             self.all_sprites.draw(self.player.hitbox_rect.center)
-            # for enemy in self.enemies:
-            #   enemy.change_direction()
-            #   enemy.update(0.2)
-            #   enemy.move_set()   
-            #   enemy.attack(self.player)
-            #   enemy.hit(self.player)
-            #   enemy.death()
-            #   enemy.blit_enemy(self.player.hitbox_rect.center,WINDOW_WIDTH,WINDOW_HEIGHT)
-            # #render
+            
             score_surface = self.font.render(f'Score: {self.score}', True, (255, 255, 255))
-            hp_surface = self.font.render(f'Hp: {self.hp}', True, (255, 255, 255))
+            hp_surface = self.font.render(f'Hp: {self.player_hp}', True, (255, 255, 255))
+            hp1_surface = self.font.render(f'Hp1: {self.enermy_hp}', True, (255, 255, 255))
             self.display_surface.blit(score_surface, (10, 10))
             self.display_surface.blit(hp_surface, (10,50))
-
+            self.display_surface.blit(hp1_surface, (10,90))
             pygame.display.update()
         pygame.quit()
 

@@ -14,15 +14,27 @@ class AnimatedSprite(Sprites):
         self.frame_index = 0
         self.animation_speed = 5
         self.current_state = 'idle'  # Bắt đầu với trạng thái 'idle'
+        # cờ kiểm tra trạng thái
         self.is_attacking = False
+        self.is_death = False
+        self.is_hurt = False
+        
         super().__init__(pos, self.frames[self.current_state][self.frame_index], groups)
     
     def animate(self, dt, flip):
         # Cập nhật chỉ số frame dựa trên thời gian và tốc độ animation
         self.frame_index += self.animation_speed * dt
+        
         if self.frame_index >= len(self.frames[self.current_state]):
             self.frame_index = 0  # Lặp lại từ đầu khi hết ảnh
-        
+            # Kiểm tra các trạng thái kết thúc hoạt ảnh
+            if self.current_state == 'hurt':
+                self.is_hurt = False  # Dừng trạng thái 'hurt' khi hoạt ảnh kết thúc
+            elif self.current_state == 'attack':
+                self.is_attacking = False  # Dừng trạng thái 'attack'
+            elif self.current_state == 'death':
+                self.kill()  # Có thể kill đối tượng khi 'death' kết thúc
+
         # Cập nhật ảnh hiện tại từ trạng thái hiện tại
         self.image = self.frames[self.current_state][int(self.frame_index)]
         if flip == True:
@@ -34,8 +46,8 @@ class AnimatedSprite(Sprites):
             self.current_state = new_state
             self.frame_index = 0  # Reset lại frame index khi chuyển sang trạng thái mới
         # chỉnh riêng cho speed attack
-        self.rect = self.image.get_rect(topleft = self.rect.topleft)
-        if self.current_state == 'attack':
+        # self.rect = self.image.get_rect(topleft = self.rect.topleft)  khi giữa các ảnh có pixel khác nhau 
+        if self.current_state == 'attack' or self.current_state == 'death' or self.current_state == 'jump':
             self.animation_speed = 10
         else:
             self.animation_speed = 5
@@ -48,45 +60,47 @@ class Enermy(AnimatedSprite):
     def destroy(self):
         self.kill()
 
-    # def update(self, dt):
-    #     self.move(dt)
-    #     self.constraint()
-    #     self.animate(dt, flip = self.flip)
-
 class Skeleton1(Enermy):
     def __init__(self, rect, frames , groups, player_sprite):
         super().__init__(rect.topleft, frames, groups)
         self.rect.bottomleft = rect.bottomleft
         self.main_rect = rect   #hình chữ nhật giới hạn di chuyển
         self.hitbox_rect = self.rect.inflate(-0, -0)
-        self.hitbox_attack = pygame.Rect((0,0), (40, self.hitbox_rect.height)) 
+        self.hitbox_attack = pygame.Rect((0,0), (50, self.hitbox_rect.height)) 
         self.speed = 100
         self.direction = 0
         self.follow = False
-        # self.is_attacking = False
+
         self.player_sprite = player_sprite
 
     def move(self, dt):
-        if self.follow and self.is_attacking == False:
+        if self.follow == True and self.is_attacking == False and self.is_hurt == False:
             self.rect.x += self.direction * self.speed * dt
         self.hitbox_rect.topleft = self.rect.topleft
 
     def animated(self, dt):
-        if self.direction == 0 and self.follow == False:          # nếu không thêm điều kiện sẽ
+        if self.is_death == True:
+            self.set_state('death')
+        elif self.is_hurt == True:
+            self.set_state('hurt')
+            self.is_attacking = False
+        elif self.follow == False and self.is_attacking == False and self.is_hurt == False:
+        # elif self.direction == 0 and self.follow == False:          # nếu không thêm điều kiện sẽ
             self.set_state('idle')
-        elif self.direction != 0 and self.follow == True:
+        # elif self.direction != 0 and self.follow == True:
+        elif self.follow == True and self.is_attacking == False and self.is_hurt == False:
             self.set_state('walk')
         for player in self.player_sprite:
-            if player.hitbox_rect.colliderect(self.hitbox_rect):
+            if player.hitbox_rect.colliderect(self.hitbox_rect) and player.is_death == False and self.is_hurt == False:
                 self.follow = False
                 self.is_attacking = True
                 self.set_state('attack') 
+            elif player.is_death == True: 
+                    self.follow = False
             else: 
-                if(self.is_attacking == False):
+                if self.is_attacking == False:
                     self.follow = True
-        self.animate(dt, flip = self.flip)
-        if self.current_state == 'attack' and self.frame_index >= len(self.frames['attack']) - 1:
-            self.is_attacking = False
+        super().animate(dt, flip=self.flip)
     
     def get_attack_frame(self):
         #Trả về chỉ số frame của animation tấn công hiện tại ->mượt hơn
@@ -96,7 +110,8 @@ class Skeleton1(Enermy):
 
     def following(self):
         for player in self.player_sprite:
-            if player.hitbox_rect.colliderect(self.main_rect):
+            if player.hitbox_rect.colliderect(self.main_rect):# and player.is_death == False:
+                self.follow = True
                 if player.rect.x > self.rect.x:
                     self.flip = False
                     self.direction = 1
@@ -105,19 +120,19 @@ class Skeleton1(Enermy):
                     self.direction = -1
             else:
                 self.follow = False
-                self.direction = 0
+                # self.direction = 0
 
     def set_hitbox(self):
         if self.flip:
-            self.hitbox_attack.midright = self.hitbox_rect.midleft
+            self.hitbox_attack.midright = self.hitbox_rect.center
         else: 
-            self.hitbox_attack.midleft = self.hitbox_rect.midright
+            self.hitbox_attack.midleft = self.hitbox_rect.center
 
     def update(self, dt):
         self.following()
         self.set_hitbox()
-        self.animated(dt)
         self.move(dt)
+        self.animated(dt)
 
 class Skeleton(Enermy):
     def __init__(self, rect, frames, groups, speed):
@@ -206,20 +221,24 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             return int(self.frame_index)
         return -1
 
-    def animate(self, dt):
-        if self.is_attacking == True:
+    def animated(self, dt):
+        if self.is_death:
+            self.set_state('death')
+        elif self.is_hurt == True:
+            self.set_state('hurt')
+            self.is_attacking = False   #bị ăn dmg thì ko đấm nữa 
+        elif self.is_attacking == True:
             self.set_state('attack')
+        # elif self.direction.y != 0:
+        elif self.can_jump == False:
+            self.set_state('jump')
         elif self.direction.x == 0 and self.can_jump:  #Nhân vật đứng yên và có thể nhảy
             self.set_state('idle')                   #self.set_state là phương thức của lớp cha ở AnimateSprite
         elif self.direction.x and self.can_jump:
             self.set_state('walk')
-        elif self.direction.y:
-            self.set_state('jump')
         
         # Gọi hàm animate của lớp AnimatedSprite để cập nhật animation
         super().animate(dt, flip = self.flip)
-        if self.current_state == 'attack' and self.frame_index >= len(self.frames['attack']) - 1:
-            self.is_attacking = False
         
     def check_floor(self):
         #tạo 1 hình chữ nhật bé tý sát dưới hitbox nhân vật để kiểm tra xem có va chạm với nền không
@@ -248,10 +267,11 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
                     self.direction.y = 0   #va chạm ở trên -> vector chuyển động mất ngay -> trọng lực kéo xuống mượt
 
     def update(self, dt):
-        self.check_floor()
-        self.input()
-        self.move(dt)
-        self.animate(dt)
+        if self.is_death == False:
+            self.check_floor()
+            self.input()
+            self.move(dt)
+        self.animated(dt)
 
 class Coin(AnimatedSprite):
     def __init__(self, pos, frames, groups):
