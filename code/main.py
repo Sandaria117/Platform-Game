@@ -28,7 +28,7 @@ class Game:
         #score, hp
         self.score = 0
         self.player_hp = 5
-        self.enermy_hp = 5
+        self.enermy_hp = 3
         self.font = pygame.font.Font(None, 36)  #tạo 1 font obj -> font in chữ ra màn
 
         #cooldown
@@ -150,10 +150,8 @@ class Game:
             
             score_surface = self.font.render(f'Score: {self.score}', True, (255, 255, 255))
             hp_surface = self.font.render(f'Hp: {self.player_hp}', True, (255, 255, 255))
-            hp1_surface = self.font.render(f'Hp1: {self.enermy_hp}', True, (255, 255, 255))
             self.display_surface.blit(score_surface, (10, 10))
             self.display_surface.blit(hp_surface, (10,50))
-            self.display_surface.blit(hp1_surface, (10,90))
             pygame.display.update()
         pygame.quit()
 
