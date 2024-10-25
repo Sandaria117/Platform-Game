@@ -73,7 +73,7 @@ class Enermy(AnimatedSprite):
     def destroy(self):
         self.kill()
 
-class Skeleton1(Enermy):
+class Enermy_2(Enermy):
     def __init__(self, rect, frames , groups, player_sprite):
         super().__init__(rect.topleft, frames, groups)
         self.rect.bottomleft = rect.bottomleft
@@ -151,7 +151,7 @@ class Skeleton1(Enermy):
         self.move(dt)
         self.animated(dt)
 
-class Skeleton(Enermy):
+class Enermy_1(Enermy):
     def __init__(self, rect, frames, groups, speed):
         super().__init__(rect.topleft, frames, groups) 
         self.rect.bottomleft = rect.bottomleft
@@ -284,7 +284,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
                     if self.direction.y < 0: 
                         self.hitbox_rect.top = sprite.rect.bottom  
                     self.direction.y = 0   #va chạm ở trên -> vector chuyển động mất ngay -> trọng lực kéo xuống mượt
-    ###
+
     def die(self):
         self.is_death = True
     
@@ -324,9 +324,9 @@ class Checkpoint(AnimatedSprite):
         if self.active:
             self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
         
-class Dustcanmove(Sprites):
-    # self.
-    def __init__(self, rect, surf, groups):
+class Dust_canmove_horizontal(Sprites):
+    # self.pos
+    def __init__(self, rect , surf, groups):
         # self.s
         super().__init__(rect.topleft, surf, groups)
         self.rect.bottomleft = rect.bottomleft
@@ -348,3 +348,17 @@ class Dustcanmove(Sprites):
         self.move(dt)
         self.check_flip()
 
+class Dust_canmove_vertical(Sprites):
+    def __init__(self, rect, surf, groups):
+        super().__init__(rect.topleft, surf, groups)
+        self.rect.midbottom = rect.midbottom
+        self.main_rect = rect
+        self.flip = False
+        self.direction = 1
+        self.speed = 100
+
+    def move(self,dt):
+        self.rect.y += self.direction * self.speed * dt
+    
+    def update(self, dt):
+        self.move(dt)

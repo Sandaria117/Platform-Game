@@ -34,6 +34,7 @@ class Game:
 
         #cooldown
         self.cooldown_hp = Timer(500)   #sau 0,5s thì mới có thể ăn dmg lần nữa
+
     
     def import_assets(self):
         self.player_frames = {
@@ -61,35 +62,40 @@ class Game:
     def setup(self):
         map = load_pygame(join('data', 'tmx', 'testmap6.tmx'))
         # Phóng to các tile của layer map
-        for x, y, image in map.get_layer_by_name('Background').tiles():   # background
+        # Phóng to các đối tượng va chạm (objects) phải * 2 lên vì mình đang phóng to tất cả các hình ảnh lên gấp đôi, do đó tọa độ cũng phải x2
+        # background
+        for x, y, image in map.get_layer_by_name('Background').tiles():
             # Phóng to hình ảnh
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
             Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, self.all_sprites)  #sprite_bg ->all_sprite
-
+        # trang trí   
         for x, y, image in map.get_layer_by_name('Decorate').tiles():  # trang trí
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
             Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, self.all_sprites)
-        
-        # Phóng to các đối tượng va chạm (objects) phải * 2 lên vì mình đang phóng to tất cả các hình ảnh lên gấp đôi, do đó tọa độ cũng phải x2
-        for obj in map.get_layer_by_name('Dust'):        # đất để đứng
+        # đất để đứng
+        for obj in map.get_layer_by_name('Dust'):        
             scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
             Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.collision_sprites))   #sprite_collision -> collision_sprite
-        
-        for obj in map.get_layer_by_name('Object'):               # thực thể
+        # thực thể
+        for obj in map.get_layer_by_name('Object'):             
             if obj.name == 'Player':
-                self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames)
-            if obj.name == 'Skeleton':
-                Skeleton(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.skeleton_frames,(self.enermy_sprites, self.all_sprites), 50) #1 khu vực Skeleton có thể di chuyển 
-            if obj.name == 'Coin':
-                Coin((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.coin_frames, (self.coin_sprites, self.all_sprites))
-            if obj.name == 'Skeleton1':
-                Skeleton1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.player_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites)
+                self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames) 
+            if obj.name == 'Enermy_1':
+                Enermy_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.skeleton_frames,(self.enermy_sprites, self.all_sprites), 50) #1 khu vực Skeleton có thể di chuyển 
+            if obj.name == 'Enermy_2':
+                Enermy_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.player_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites)
             if obj.name == 'Checkpoint':
                 Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites))
-            if obj.name == 'test':
-                image_obj = pygame.Surface((50, 50))
+            if obj.name == 'Coin':
+                Coin((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.coin_frames, (self.coin_sprites, self.all_sprites))
+            if obj.name == 'Dust_canmove_horizontal':
+                image_obj = pygame.Surface((100, 20))
                 # image_obj = set_colorkey((0, 0, 0))
-                Dustcanmove(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), image_obj, (self .all_sprites,self.collision_sprites))
+                Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), image_obj, (self.all_sprites, self.collision_sprites))
+            if obj.name == "Dust_canmove_vertical":
+                image_obj = pygame.Surface((100, 20))
+                Dust_canmove_vertical(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), image_obj, (self.all_sprites, self.collision_sprites))
+
 
     def check_attack_collision(self):
         for checkpoint in self.checkpoint_sprites:  

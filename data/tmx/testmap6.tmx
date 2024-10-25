@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="100" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="57">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="100" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="63">
  <tileset firstgid="1" source="../tsx/bg.tsx"/>
  <tileset firstgid="257" source="../tsx/deco.tsx"/>
  <tileset firstgid="1281" source="../tsx/deco2.tsx"/>
@@ -192,20 +192,25 @@
   <object id="54" gid="3331" x="415" y="1119" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="Object">
-  <object id="6" name="Player" x="54.695" y="1307.38">
+  <object id="6" name="Player" x="816.695" y="1031.38">
    <point/>
   </object>
-  <object id="23" name="Skeleton1" x="411.833" y="1150.4" width="152.167" height="142.601"/>
-  <object id="24" name="Skeleton1" x="598.167" y="1069.9" width="113.333" height="149.774"/>
-  <object id="36" name="Skeleton" x="222.019" y="1296.87" width="177.358" height="81.1321"/>
+  <object id="23" name="Enermy_2" x="411.833" y="1150.4" width="152.167" height="142.601"/>
+  <object id="24" name="Enermy_2" x="598.167" y="1069.9" width="113.333" height="149.774"/>
+  <object id="36" name="Enermy_1" x="222.019" y="1296.87" width="177.358" height="81.1321"/>
   <object id="37" name="Coin" x="651.396" y="951.58">
    <point/>
   </object>
   <object id="38" name="Coin" x="974.132" y="974.226">
    <point/>
   </object>
-  <object id="39" name="Checkpoint" x="867.585" y="1037.21">
+  <object id="39" name="Checkpoint" x="867.585" y="1039.21">
    <point/>
   </object>
+  <object id="62" name="Checkpoint" x="426.585" y="1050.21">
+   <point/>
+  </object>
+  <object id="57" name="Dust_canmove_horizontal" x="1224" y="1069" width="146" height="29"/>
+  <object id="60" name="Dust_canmove_vertical" x="1382" y="948" width="75" height="148"/>
  </objectgroup>
 </map>
