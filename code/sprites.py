@@ -21,6 +21,8 @@ class AnimatedSprite(Sprites):
         # cờ kiểm tra loại đối tượng
         self.is_player = False
         self.is_enermy = False
+
+        self.respawn_cooldown = Timer(1000)
         
         super().__init__(pos, self.frames[self.current_state][self.frame_index], groups)
     
@@ -37,7 +39,11 @@ class AnimatedSprite(Sprites):
                 self.is_attacking = False  # Dừng trạng thái 'attack'
             elif self.current_state == 'death':
                 if self.is_player:
-                    self.respawn()
+                    # if self.respawn_cooldown.active == False:
+                    #     self.respawn_cooldown.activate()
+                    # self.respawn_cooldown.update()
+                    # if self.respawn_cooldown.active == False:
+                        self.respawn()
                 elif self.is_enermy:
                     self.kill()  # Có thể kill đối tượng khi 'death' kết thúc
                 
@@ -78,6 +84,7 @@ class Skeleton1(Enermy):
         self.direction = 0
         self.follow = False
         self.enermy_hp = 3
+        self.is_enermy = True
 
         self.player_sprite = player_sprite
 
@@ -284,7 +291,6 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
     def respawn(self):
         self.hitbox_rect.center = self.respawn_point
         self.is_death = False
-        
 
     def update(self, dt):
         if self.is_death == False:
@@ -310,9 +316,35 @@ class Checkpoint(AnimatedSprite):
         self.active = False
 
     def activate(self, player):
+        self.active = True
         player.respawn_point = self.rect.center
 
     def update(self, dt):
         self.animation_speed = 10
-        self.animate(dt, False)
+        if self.active:
+            self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
         
+class Dustcanmove(Sprites):
+    # self.
+    def __init__(self, rect, surf, groups):
+        # self.s
+        super().__init__(rect.topleft, surf, groups)
+        self.rect.bottomleft = rect.bottomleft
+        self.main_rect = rect   
+        self.flip = False 
+        self.direction = 1
+        self.speed = 100
+
+    def move(self, dt):
+        self.rect.x += self.direction * self.speed * dt
+
+    def check_flip(self):
+        if self.rect.left < self.main_rect.left:
+            self.direction *= -1
+        if self.rect.right > self.main_rect.right:
+            self.direction *= -1
+
+    def update(self, dt):
+        self.move(dt)
+        self.check_flip()
+

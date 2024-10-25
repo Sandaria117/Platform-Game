@@ -3,6 +3,7 @@ from sprites import *
 from groups import *
 from support import * 
 from timer import *
+from menu import *
 
 class Game:
     def __init__(self):
@@ -85,11 +86,16 @@ class Game:
                 Skeleton1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.player_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites)
             if obj.name == 'Checkpoint':
                 Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites))
-
+            if obj.name == 'test':
+                image_obj = pygame.Surface((50, 50))
+                # image_obj = set_colorkey((0, 0, 0))
+                Dustcanmove(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), image_obj, (self .all_sprites,self.collision_sprites))
 
     def check_attack_collision(self):
-        for checkpoint in self.checkpoint_sprites:  # List or group of checkpoints
+        for checkpoint in self.checkpoint_sprites:  
             if self.player.hitbox_rect.colliderect(checkpoint.rect):
+                for other_checkpoint in self.checkpoint_sprites:
+                    other_checkpoint.active = False            # đặt tất cả các check point cũ không active,, chỉ active checkpoint mới nhất
                 checkpoint.activate(self.player)
 
         for enermy in self.enermy_vip_sprites:
@@ -117,10 +123,6 @@ class Game:
                     if self.player_hp == 0:
                         break
                     self.player.is_hurt = True
-                    # if self.player_hp == 0:
-                    #     self.player.die()
-                    #     # self.player.is_death == True
-                    #     self.player_hp = 5
             self.cooldown_hp.update()
 
         for enermy in self.enermy_sprites:
@@ -132,10 +134,10 @@ class Game:
                         self.player.is_death = True
                         break
             self.cooldown_hp.update()
+
         if self.player_hp == 0:
-                    self.player.die()
-                    # self.player.is_death == True
-                    self.player_hp = 5 
+            self.player.die()
+            self.player_hp = 5 
         # sprite_collision = pygame.sprite.spritecollide(self.player, self.enermy_sprites, False, pygame.sprite.collide_mask)
         # if sprite_collision:
         #     #
@@ -150,6 +152,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                        
             #update
             self.all_sprites.update(dt)
             self.check_attack_collision()
