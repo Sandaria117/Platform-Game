@@ -78,7 +78,7 @@ class Enermy_2(Enermy):
         super().__init__(rect.topleft, frames, groups)
         self.rect.bottomleft = rect.bottomleft
         self.main_rect = rect   #hình chữ nhật giới hạn di chuyển
-        self.hitbox_rect = self.rect.inflate(-0, -0)
+        self.hitbox_rect = self.rect.inflate(-10, -0)
         self.hitbox_attack = pygame.Rect((0,0), (50, self.hitbox_rect.height)) 
         self.speed = 100
         self.direction = 0
@@ -151,29 +151,51 @@ class Enermy_2(Enermy):
         self.move(dt)
         self.animated(dt)
 
-class Enermy_1(Enermy):
-    def __init__(self, rect, frames, groups, speed):
+class Saw_1(Enermy):
+    def __init__(self, rect, frames, groups, speed, direction, pos_start):
+        self.main_rect = rect  
+        self.pos_start = pos_start
         super().__init__(rect.topleft, frames, groups) 
-        self.rect.bottomleft = rect.bottomleft
-        self.main_rect = rect                       #hình chữ nhật giới hạn di chuyển
+        self.pos_end = pygame.Rect(0, 0, 1, 1)
+        if self.pos_start == "bottom":
+            self.rect.midbottom = self.main_rect.midbottom
+            # self.pos_end.midtop = self.main_rect.midtop
+        elif self.pos_start == "top":
+            self.rect.midtop = self.main_rect.midtop
+            # self.pos_end.midbottom = self.main_rect.midbottom
+        elif self.pos_start == "left":
+            self.rect.midleft = self.main_rect.midleft
+        elif self.pos_start == "right":
+            self.rect.midright = self.main_rect.midright                 
         self.speed = speed
-        self.direction = 1
-        self.hitbox_rect = self.rect.inflate(-10, 0)
+        self.direction = direction
+        self.hitbox_rect = self.rect.inflate(0, 0)
 
     def move(self, dt):
-        self.rect.x += self.direction * self.speed * dt
+        if self.pos_start == "left" or self.pos_start == "right":
+            self.rect.x += self.direction * self.speed * dt
+        else:
+            self.rect.y += self.direction * self.speed * dt
         self.hitbox_rect.topleft = self.rect.topleft
 
     def constraint(self):
-        if self.rect.left < self.main_rect.left:
-            self.direction *= -1
-            self.flip = False
-        if self.rect.right > self.main_rect.right:
-            self.direction *= -1
-            self.flip = True
-    
+        if self.pos_start == "left" or self.pos_start == "right":
+            if self.rect.midleft < self.main_rect.midleft:
+                self.direction *= -1
+                self.flip = True
+            if self.rect.midright > self.main_rect.midright:
+                self.direction *= -1
+                self.flip = False
+        else:
+            if self.rect.midtop < self.main_rect.midtop:
+                self.direction *= -1
+                self.flip = True
+            if self.rect.midbottom > self.main_rect.midbottom:
+                self.direction *= -1
+                self.flip = False
+            
     def update(self, dt):
-        self.set_state('walk')
+        self.animation_speed = 20
         self.move(dt)
         self.constraint()
         self.animate(dt, flip = self.flip)
@@ -199,7 +221,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
 
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
-        self.hitbox_attack = pygame.Rect((0,0), (40, self.hitbox_rect.height)) 
+        self.hitbox_attack = pygame.Rect((0,0), (30, self.hitbox_rect.height)) 
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -335,15 +357,15 @@ class Checkpoint(AnimatedSprite):
         player.respawn_point = self.rect.center
 
     def update(self, dt):
-        self.animation_speed = 10
+        self.animation_speed = 20
         if self.active:
             self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
         
-class Dust_canmove_horizontal(Sprites):
+class Dust_canmove_horizontal(AnimatedSprite):
     # self.pos
-    def __init__(self, rect, surf, groups, direction, pos_start):
+    def __init__(self, rect, frames, groups, direction, pos_start):
         self.main_rect = rect 
-        super().__init__(rect.topleft, surf, groups)
+        super().__init__(rect.topleft, frames, groups)
         self.pos_end = pygame.Rect(0, 0, 1, 1)
         if pos_start == "left":
             self.rect.midleft = self.main_rect.midleft
@@ -367,12 +389,14 @@ class Dust_canmove_horizontal(Sprites):
             self.direction_x *= -1
 
     def update(self, dt):
+        self.animation_speed = 20
         self.move(dt)
+        self.animate(dt, False)
         self.check_flip()
 
-class Dust_canmove_vertical(Sprites):
-    def __init__(self, rect, surf, groups , func, direction, pos_start):
-        super().__init__(rect.topleft, surf, groups)
+class Dust_canmove_vertical(AnimatedSprite):
+    def __init__(self, rect, frames, groups , func, direction, pos_start):
+        super().__init__(rect.topleft, frames, groups)
         self.main_rect = rect
         # self.rect.midbottom = self.main_rect.midbottom
         self.pos_end = pygame.Rect(0, 0, 1, 1)
@@ -406,6 +430,8 @@ class Dust_canmove_vertical(Sprites):
     
     def update(self, dt):
         self.move(dt)
+        self.animation_speed = 20
+        self.animate(dt, False)
         if self.func == "return":
             self.check_flip()
         elif self.func == "loop":
