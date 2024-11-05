@@ -185,6 +185,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.is_player = True
         #collision
         self.collision_sprite = collision_sprites
+        self.platform = None
         
         #movement
         self.direction = pygame.Vector2()
@@ -195,6 +196,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.flip = False
         
         self.respawn_point = pos
+
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
         self.hitbox_attack = pygame.Rect((0,0), (40, self.hitbox_rect.height)) 
@@ -214,7 +216,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         elif keys[pygame.K_LEFT]:
             self.flip = True
         if keys[pygame.K_UP] and self.can_jump:
-            self.direction.y = -20 
+            self.direction.y = -18 
         self.set_hitbox()   #cập nhật hướng hitbox
 
     def move(self, dt):
@@ -259,17 +261,28 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         # Gọi hàm animate của lớp AnimatedSprite để cập nhật animation
         super().animate(dt, flip = self.flip)
         
+    def move_along_the_platform(self, dt):
+        if self.platform:
+            self.hitbox_rect.x += self.platform.direction_x * self.platform.speed * dt
+            self.hitbox_rect.y += self.platform.direction_y * self.platform.speed * dt
+
     def check_floor(self):
         #tạo 1 hình chữ nhật bé tý sát dưới hitbox nhân vật để kiểm tra xem có va chạm với nền không
-        bottom_rect = pygame.Rect((0,0), (self.hitbox_rect.width, 1))
-        bottom_rect.midtop = self.hitbox_rect.midbottom
+        floor_rect = pygame.Rect((0,0), (self.hitbox_rect.width, 3))
+        floor_rect.midtop = self.hitbox_rect.midbottom
 
         level_rect = [sprite.rect for sprite in self.collision_sprite] #lấy cái khối va chạm được truyền vào 1 danh sách
-        if bottom_rect.collidelist(level_rect) >= 0:                   #collidelist: dùng để trả về chỉ số sprite đầu tiên va chạm với level_rect // 0 va chạm trả về -1
+        if floor_rect.collidelist(level_rect) >= 0:                   #collidelist: dùng để trả về chỉ số sprite đầu tiên va chạm với level_rect // 0 va chạm trả về -1
             self.can_jump = True                                       #tức là đang trên floor
         else: 
             self.can_jump = False
-
+        
+        self.platform = None
+        for sprite in [sprite for sprite in self.collision_sprite.sprites() if hasattr(sprite, "moving")]:
+            if sprite.rect.colliderect(floor_rect):
+                self.platform = sprite
+                
+    
     def collision(self, direction):
         for sprite in self.collision_sprite:
             if sprite.rect.colliderect(self.hitbox_rect):
@@ -294,9 +307,11 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
 
     def update(self, dt):
         if self.is_death == False:
-            self.check_floor()
             self.input()
+            self.check_floor()
+            self.move_along_the_platform(dt)
             self.move(dt)
+
         self.animated(dt)
 
 class Coin(AnimatedSprite):
@@ -326,39 +341,72 @@ class Checkpoint(AnimatedSprite):
         
 class Dust_canmove_horizontal(Sprites):
     # self.pos
-    def __init__(self, rect , surf, groups):
-        # self.s
+    def __init__(self, rect, surf, groups, direction, pos_start):
+        self.main_rect = rect 
         super().__init__(rect.topleft, surf, groups)
-        self.rect.bottomleft = rect.bottomleft
-        self.main_rect = rect   
+        self.pos_end = pygame.Rect(0, 0, 1, 1)
+        if pos_start == "left":
+            self.rect.midleft = self.main_rect.midleft
+            # self.pos_end.midright = self.main_rect.midright
+        elif pos_start == "right":
+            self.rect.midright = self.main_rect.midright
+            # self.pos_end.midleft = self.main_rect.midleft
         self.flip = False 
-        self.direction = 1
+        self.direction_x = direction
+        self.direction_y = 0
         self.speed = 100
+        self.moving = True
 
     def move(self, dt):
-        self.rect.x += self.direction * self.speed * dt
+        self.rect.x += self.direction_x * self.speed * dt
 
     def check_flip(self):
         if self.rect.left < self.main_rect.left:
-            self.direction *= -1
+            self.direction_x *= -1
         if self.rect.right > self.main_rect.right:
-            self.direction *= -1
+            self.direction_x *= -1
 
     def update(self, dt):
         self.move(dt)
         self.check_flip()
 
 class Dust_canmove_vertical(Sprites):
-    def __init__(self, rect, surf, groups):
+    def __init__(self, rect, surf, groups , func, direction, pos_start):
         super().__init__(rect.topleft, surf, groups)
-        self.rect.midbottom = rect.midbottom
         self.main_rect = rect
+        # self.rect.midbottom = self.main_rect.midbottom
+        self.pos_end = pygame.Rect(0, 0, 1, 1)
+        if pos_start == "bottom":
+            self.rect.midbottom = self.main_rect.midbottom
+            self.pos_end.topleft = self.main_rect.midtop
+        elif pos_start == "top":
+            self.rect.midtop = self.main_rect.midtop
+            self.pos_end.topleft = self.main_rect.midbottom
         self.flip = False
-        self.direction = 1
+        self.direction_y = direction
+        self.direction_x = 0
         self.speed = 100
+        self.moving = True
+        self.func = func
+    
+    def check_flip(self):
+        if self.rect.midbottom > self.main_rect.midbottom:
+            self.direction_y *= -1
+        elif self.rect.midtop < self.main_rect.midtop:
+            self.direction_y *= -1
 
+    def destroy(self):
+        if self.direction_y == 1 and self.rect.midbottom > self.pos_end.midbottom:
+            self.kill()
+        if self.direction_y == -1 and self.rect.midtop < self.pos_end.midtop:
+            self.kill()
+        
     def move(self,dt):
-        self.rect.y += self.direction * self.speed * dt
+        self.rect.y += self.direction_y * self.speed * dt
     
     def update(self, dt):
         self.move(dt)
+        if self.func == "return":
+            self.check_flip()
+        elif self.func == "loop":
+            self.destroy()
