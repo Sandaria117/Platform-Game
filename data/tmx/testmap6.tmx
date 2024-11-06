@@ -154,7 +154,7 @@
 </data>
  </layer>
  <objectgroup id="3" name="Object">
-  <object id="6" name="Player" x="54.7" y="1308.38">
+  <object id="6" name="Player" x="54.7" y="1297.38">
    <point/>
   </object>
   <object id="23" name="Enermy_2" x="411.833" y="1150.4" width="152.167" height="142.601"/>

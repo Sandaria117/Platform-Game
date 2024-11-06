@@ -64,6 +64,7 @@ class Game:
             'hurt': import_folder('images','enermy','forest','hurt'),
             'idle': import_folder('images','enermy','forest','idle')
         }
+        
         self.coin_frames = {
             'idle': import_folder('images','accessory','coin', 'idle', width=32, height=32)
         }
@@ -154,7 +155,7 @@ class Game:
                 
         #check quái với player
         for enermy in self.enermy_vip_sprites:
-            if self.player.hitbox_rect.colliderect(enermy.hitbox_attack) and enermy.get_attack_frame() == 4:
+            if self.player.hitbox_rect.colliderect(enermy.hitbox_attack) and enermy.get_attack_frame() == 3:
                 if self.cooldown_hp.active == False:
                     self.player_hp -= 1
                     self.cooldown_hp.activate()

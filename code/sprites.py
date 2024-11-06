@@ -221,7 +221,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
 
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
-        self.hitbox_attack = pygame.Rect((0,0), (30, self.hitbox_rect.height)) 
+        self.hitbox_attack = pygame.Rect((0,0), (20, self.hitbox_rect.height)) 
 
     def input(self):
         keys = pygame.key.get_pressed()
