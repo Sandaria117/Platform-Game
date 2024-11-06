@@ -21,8 +21,6 @@ class AnimatedSprite(Sprites):
         # cờ kiểm tra loại đối tượng
         self.is_player = False
         self.is_enermy = False
-
-        self.respawn_cooldown = Timer(1000)
         
         super().__init__(pos, self.frames[self.current_state][self.frame_index], groups)
     
@@ -39,10 +37,6 @@ class AnimatedSprite(Sprites):
                 self.is_attacking = False  # Dừng trạng thái 'attack'
             elif self.current_state == 'death':
                 if self.is_player:
-                    # if self.respawn_cooldown.active == False:
-                    #     self.respawn_cooldown.activate()
-                    # self.respawn_cooldown.update()
-                    # if self.respawn_cooldown.active == False:
                         self.respawn()
                 elif self.is_enermy:
                     self.kill()  # Có thể kill đối tượng khi 'death' kết thúc
@@ -57,8 +51,6 @@ class AnimatedSprite(Sprites):
         if new_state != self.current_state:
             self.current_state = new_state
             self.frame_index = 0  # Reset lại frame index khi chuyển sang trạng thái mới
-        # chỉnh riêng cho speed attack
-        # self.rect = self.image.get_rect(topleft = self.rect.topleft)  khi giữa các ảnh có pixel khác nhau 
         if self.current_state == 'attack' or self.current_state == 'death' or self.current_state == 'jump':
             self.animation_speed = 10
         else:
@@ -74,16 +66,20 @@ class Enermy(AnimatedSprite):
         self.kill()
 
 class Enermy_2(Enermy):
-    def __init__(self, rect, frames , groups, player_sprite):
+    def __init__(self, rect, frames , groups, player_sprite, trangthai):
         super().__init__(rect.topleft, frames, groups)
-        self.rect.bottomleft = rect.bottomleft
+        self.enermy_hp = 3
+        self.rect.bottomleft = rect.midbottom
+        if trangthai[0] != 0 and trangthai[1] != 0:
+            self.rect.x = trangthai[0]
+            self.rect.y = trangthai[1]
+            self.enermy_hp = trangthai[2]
         self.main_rect = rect   #hình chữ nhật giới hạn di chuyển
         self.hitbox_rect = self.rect.inflate(-10, -0)
         self.hitbox_attack = pygame.Rect((0,0), (50, self.hitbox_rect.height)) 
         self.speed = 100
         self.direction = 0
         self.follow = False
-        self.enermy_hp = 3
         self.is_enermy = True
 
         self.player_sprite = player_sprite
@@ -201,14 +197,14 @@ class Saw_1(Enermy):
         self.animate(dt, flip = self.flip)
 
 class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thuộc tính cơ bản cho 1 sprite
-    def __init__(self, pos, groups, collision_sprites, frames):
+    def __init__(self, pos, groups, collision_sprites, frames, jump_audio, attack_audio, hp):
         super().__init__(pos, frames, groups)    #super() ->gọi lớp cha, super().init ở đây là khi truyền vào init của player sẽ tạo các thuộc tính trong lớp cha là animated
-        
+        #player
         self.is_player = True
         #collision
         self.collision_sprite = collision_sprites
         self.platform = None
-        
+        self.hp = hp
         #movement
         self.direction = pygame.Vector2()
         self.speed = 500
@@ -216,19 +212,20 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         self.can_jump = False
         #animate
         self.flip = False
-        
+        #respawn
         self.respawn_point = pos
-
         #hitbox
         self.hitbox_rect = self.rect.inflate(-30, -0)  #hitbox cho bé đi so với ảnh
         self.hitbox_attack = pygame.Rect((0,0), (20, self.hitbox_rect.height)) 
+        #audio
+        self.attack_audio = attack_audio
+        self.jump_audio = jump_audio
 
     def input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_q]:
+        if keys[pygame.K_q] and self.is_attacking == False:
             self.is_attacking = True
-        
-        # self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+            self.attack_audio.play()
         if self.can_jump:
             self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
         else:
@@ -239,6 +236,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             self.flip = True
         if keys[pygame.K_UP] and self.can_jump:
             self.direction.y = -18 
+            self.jump_audio.play()
         self.set_hitbox()   #cập nhật hướng hitbox
 
     def move(self, dt):
@@ -272,7 +270,6 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             self.is_attacking = False   #bị ăn dmg thì ko đấm nữa 
         elif self.is_attacking == True:
             self.set_state('attack')
-        # elif self.direction.y != 0:
         elif self.can_jump == False:
             self.set_state('jump')
         elif self.direction.x == 0 and self.can_jump:  #Nhân vật đứng yên và có thể nhảy
@@ -304,7 +301,6 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
             if sprite.rect.colliderect(floor_rect):
                 self.platform = sprite
                 
-    
     def collision(self, direction):
         for sprite in self.collision_sprite:
             if sprite.rect.colliderect(self.hitbox_rect):
@@ -326,6 +322,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
     def respawn(self):
         self.hitbox_rect.center = self.respawn_point
         self.is_death = False
+        self.hp = 5
 
     def update(self, dt):
         if self.is_death == False:
