@@ -147,54 +147,75 @@ class Enermy_2(Enermy):
         self.move(dt)
         self.animated(dt)
 
-class Saw_1(Enermy):
-    def __init__(self, rect, frames, groups, speed, direction, pos_start):
+class Saw_1_2(Enermy):
+    def __init__(self, rect, frames, groups, direction, pos_start):
         self.main_rect = rect  
         self.pos_start = pos_start
         super().__init__(rect.topleft, frames, groups) 
-        self.pos_end = pygame.Rect(0, 0, 1, 1)
-        if self.pos_start == "bottom":
-            self.rect.midbottom = self.main_rect.midbottom
-            # self.pos_end.midtop = self.main_rect.midtop
-        elif self.pos_start == "top":
-            self.rect.midtop = self.main_rect.midtop
-            # self.pos_end.midbottom = self.main_rect.midbottom
-        elif self.pos_start == "left":
-            self.rect.midleft = self.main_rect.midleft
+        if self.pos_start == "left":
+            self.rect.left = self.main_rect.left
         elif self.pos_start == "right":
-            self.rect.midright = self.main_rect.midright                 
-        self.speed = speed
+            self.rect.right = self.main_rect.right                 
+        self.speed = 150
         self.direction = direction
-        self.hitbox_rect = self.rect.inflate(0, 0)
+        self.hitbox_rect = self.rect
+        # self.flip = False
 
     def move(self, dt):
-        if self.pos_start == "left" or self.pos_start == "right":
-            self.rect.x += self.direction * self.speed * dt
-        else:
-            self.rect.y += self.direction * self.speed * dt
+        self.rect.x += self.direction * self.speed * dt
         self.hitbox_rect.topleft = self.rect.topleft
 
     def constraint(self):
-        if self.pos_start == "left" or self.pos_start == "right":
-            if self.rect.midleft < self.main_rect.midleft:
-                self.direction *= -1
-                self.flip = True
-            if self.rect.midright > self.main_rect.midright:
-                self.direction *= -1
-                self.flip = False
-        else:
-            if self.rect.midtop < self.main_rect.midtop:
-                self.direction *= -1
-                self.flip = True
-            if self.rect.midbottom > self.main_rect.midbottom:
-                self.direction *= -1
-                self.flip = False
+        buffer = 10  # Khoảng đệm nhỏ để tránh việc đảo ngược hướng quá nhanh
+        if self.hitbox_rect.left <= self.main_rect.left + buffer:
+            self.direction *= -1
+            self.flip = True
+        if self.hitbox_rect.right >= self.main_rect.right - buffer:
+            self.direction *= -1
+            self.flip = False
+        
+    def update(self, dt):
+        self.animation_speed = 20
+        self.move(dt)
+        self.animate(dt, flip = self.flip)
+        self.constraint()
+
+class Saw_1_1(Enermy):
+    def __init__(self, rect, frames, groups, direction, pos_start):
+        self.main_rect = rect  
+        self.pos_start = pos_start
+        super().__init__(rect.topleft, frames, groups) 
+        if self.pos_start == "bottom":
+            self.rect.bottom = self.main_rect.bottom
+        elif self.pos_start == "top":
+            self.rect.top = self.main_rect.top
+        # if self.pos_start == "left":
+        #     self.rect.left = self.main_rect.left
+        # elif self.pos_start == "right":
+        #     self.rect.right = self.main_rect.right                 
+        self.speed = 150
+        self.direction = direction
+        self.hitbox_rect = self.rect
+        self.flip = False
+
+    def move(self, dt):
+        self.rect.y += self.direction * self.speed * dt
+        self.hitbox_rect.topleft = self.rect.topleft
+
+    def constraint(self):
+        buffer = 10  # Khoảng đệm nhỏ để tránh việc đảo ngược hướng quá nhanh
+        if self.hitbox_rect.top <= self.main_rect.top + buffer:
+            self.direction *= -1                
+            self.flip = True
+        if self.hitbox_rect.bottom >= self.main_rect.bottom - buffer:
+            self.direction *= -1
+            self.flip = False
             
     def update(self, dt):
         self.animation_speed = 20
         self.move(dt)
-        self.constraint()
         self.animate(dt, flip = self.flip)
+        self.constraint()
 
 class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thuộc tính cơ bản cho 1 sprite
     def __init__(self, pos, groups, collision_sprites, frames, jump_audio, attack_audio, death_audio, hp):
@@ -352,6 +373,7 @@ class Checkpoint(AnimatedSprite):
         super().__init__(pos, frames, groups)
         self.active = False
         self.active_audio = active_audio
+
     def activate(self, player):
         self.active = True
         player.respawn_point = self.rect.midbottom
@@ -363,17 +385,13 @@ class Checkpoint(AnimatedSprite):
             self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
    
 class Dust_canmove_horizontal(AnimatedSprite):
-    # self.pos
     def __init__(self, rect, frames, groups, direction, pos_start):
         self.main_rect = rect 
         super().__init__(rect.topleft, frames, groups)
-        self.pos_end = pygame.Rect(0, 0, 1, 1)
         if pos_start == "left":
-            self.rect.midleft = self.main_rect.midleft
-            # self.pos_end.midright = self.main_rect.midright
+            self.rect.left = self.main_rect.left
         elif pos_start == "right":
-            self.rect.midright = self.main_rect.midright
-            # self.pos_end.midleft = self.main_rect.midleft
+            self.rect.right = self.main_rect.right
         self.flip = False 
         self.direction_x = direction
         self.direction_y = 0
@@ -384,9 +402,10 @@ class Dust_canmove_horizontal(AnimatedSprite):
         self.rect.x += self.direction_x * self.speed * dt
 
     def check_flip(self):
-        if self.rect.left < self.main_rect.left:
+        buffer = 10
+        if self.rect.left <= self.main_rect.left + buffer:
             self.direction_x *= -1
-        if self.rect.right > self.main_rect.right:
+        if self.rect.right >= self.main_rect.right - buffer:
             self.direction_x *= -1
 
     def update(self, dt):
@@ -402,11 +421,11 @@ class Dust_canmove_vertical(AnimatedSprite):
         # self.rect.midbottom = self.main_rect.midbottom
         self.pos_end = pygame.Rect(0, 0, 1, 1)
         if pos_start == "bottom":
-            self.rect.midbottom = self.main_rect.midbottom
-            self.pos_end.topleft = self.main_rect.midtop
+            self.rect.bottom = self.main_rect.bottom
+            self.pos_end.top = self.main_rect.top
         elif pos_start == "top":
-            self.rect.midtop = self.main_rect.midtop
-            self.pos_end.topleft = self.main_rect.midbottom
+            self.rect.top = self.main_rect.top
+            self.pos_end.top = self.main_rect.bottom
         self.flip = False
         self.direction_y = direction
         self.direction_x = 0
@@ -415,15 +434,16 @@ class Dust_canmove_vertical(AnimatedSprite):
         self.func = func
     
     def check_flip(self):
-        if self.rect.midbottom > self.main_rect.midbottom:
+        buffer = 10
+        if self.rect.bottom > self.main_rect.bottom - buffer:
             self.direction_y *= -1
-        elif self.rect.midtop < self.main_rect.midtop:
+        elif self.rect.top < self.main_rect.top + buffer:
             self.direction_y *= -1
 
     def destroy(self):
-        if self.direction_y == 1 and self.rect.midbottom > self.pos_end.midbottom:
+        if self.direction_y == 1 and self.rect.bottom > self.pos_end.bottom:
             self.kill()
-        if self.direction_y == -1 and self.rect.midtop < self.pos_end.midtop:
+        if self.direction_y == -1 and self.rect.top < self.pos_end.top:
             self.kill()
         
     def move(self,dt):

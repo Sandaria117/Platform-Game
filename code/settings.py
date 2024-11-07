@@ -1,5 +1,6 @@
 import pygame
 import os
+import sys
 import json
 from os.path import join  #os.path.join -> thêm "\" để tạo đường dẫn
 from os import walk

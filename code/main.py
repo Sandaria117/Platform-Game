@@ -82,7 +82,7 @@ class Game:
         self.damage_audio = pygame.mixer.Sound(join('audio', 'audio_damage.wav'))
         self.damage_audio.set_volume(0.5)
         self.active_audio = pygame.mixer.Sound(join('audio', 'audio_active.mp3'))
-        self.active_audio.set_volume(0.2)
+        self.active_audio.set_volume(0.4)
         self.death_audio = pygame.mixer.Sound(join('audio','audio_death.ogg'))
         self.death_audio.set_volume(0.2)
 
@@ -116,10 +116,6 @@ class Game:
         for obj in map.get_layer_by_name('Object'):             
             if obj.name == 'Player':
                 self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, 5) 
-            if obj.name == 'Saw_1.1':
-                Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, -1 ,pos_start= "bottom") #1 khu vực Skeleton có thể di chuyển 
-            if obj.name == 'Saw_1.2':
-                Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, 1 ,pos_start= "left")
             if obj.name == 'Enermy_2':
                 trangthai = [0,0,0]
                 Enermy_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.enermy2_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites, trangthai)
@@ -127,15 +123,19 @@ class Game:
                 Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites), self.active_audio)
             if obj.name == 'Coin':
                 Coin((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.coin_frames, (self.coin_sprites, self.all_sprites))
+            if obj.name == 'Saw_1.1':
+                Saw_1_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "bottom") #1 khu vực Skeleton có thể di chuyển 
+            if obj.name == 'Saw_1.2':
+                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 1 , "left")
             if obj.name == 'Platform_horizontal':
-                Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1.5, "left")
+                Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
             if obj.name == "Platform_vertical":
                 Dust_canmove_vertical(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), "return", 1, "top")
             if obj.name == 'Platform_vertical_up':
                 self.dust_vertical_up_positions.append((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
             if obj.name == 'Platform_vertical_down':
                 self.dust_vertical_down_positions.append((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
-        
+
         for obj in map.get_layer_by_name('Dust'):        
             scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
             Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.collision_sprites))   #sprite_collision -> collision_sprite
@@ -176,16 +176,19 @@ class Game:
         
         for obj in map.get_layer_by_name('Object'):    
             if obj.name == 'Player':
+                x = obj.x * SCALE_FACTOR 
+                y = obj.y * SCALE_FACTOR 
                 for i in self.data:
+                    if i['name'] == 'Checkpoint':
+                        x = i['x']
+                        y = i['y']
                     if i['name'] == 'Player':
-                        self.score = i['h']  
-                        self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, 5)          
-                        # self.data.remove(i)
+                        self.score = i['h'] 
+                        self.hphphp = i['hp'] 
+                        self.player = Player((x, y), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, i['hp'])
+                        self.data.remove(i)
                         break
-            if obj.name == 'Saw_1.1':
-                Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, -1 ,pos_start= "bottom") #1 khu vực Skeleton có thể di chuyển 
-            if obj.name == 'Saw_1.2':
-                Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, 1 ,pos_start= "left")
+
             if obj.name == 'Enermy_2':
                 for i in self.data:
                     if i['name'] =='Enermy_2':
@@ -204,7 +207,10 @@ class Game:
                         Coin((i['x'], i['y']), self.coin_frames, (self.coin_sprites, self.all_sprites))
                         self.data.remove(i)
                         break
-            
+            if obj.name == 'Saw_1.1':
+                Saw_1_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "bottom") #1 khu vực Skeleton có thể di chuyển 
+            if obj.name == 'Saw_1.2':
+                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 1 , "left")
             if obj.name == 'Platform_horizontal':
                 Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
             
@@ -223,20 +229,15 @@ class Game:
             Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.collision_sprites))   #sprite_collision -> collision_sprite
         for obj in map.get_layer_by_name('Endmap'):        
             scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
-            Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map)) 
-        x, y = (0,0)
+            Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map))
         for i in self.data:
             if i['name'] == 'Checkpoint':
                 for checkpoint in self.checkpoint_sprites:
                     if checkpoint.rect.x == i['x']:
                         checkpoint.active = True
-                        x = checkpoint.rect.x
-                        y = checkpoint.rect.y
                         checkpoint.activate(self.player)
                         self.data.remove(i)
                         break
-        if x != 0:
-            self.player = Player((x, y), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, i['hp']) 
                      
         def create_dust():
             for position in self.dust_vertical_up_positions:
@@ -249,7 +250,6 @@ class Game:
         self.dust_canmove_vertical_timer.activate()
 
     def save_map(self, name):
-        self.save.obj_save(self.player.hitbox_rect.x,self.player.hitbox_rect.y-50,10,self.score,'Player',self.player.hp,1)
         for enermy in self.enermy_vip_sprites:
             self.save.obj_save(enermy.hitbox_rect.x, enermy.hitbox_rect.y,enermy.hitbox_rect.width, enermy.hitbox_rect.height,'Enermy_2',enermy.enermy_hp,1)
         for coin in self.coin_sprites:
@@ -257,6 +257,7 @@ class Game:
         for checkpoint in self.checkpoint_sprites:
             if checkpoint.active == True:
                 self.save.obj_save(checkpoint.rect.x, checkpoint.rect.y, 10,10,'Checkpoint',10,1)
+        self.save.obj_save(self.player.hitbox_rect.x,self.player.hitbox_rect.y-50,10,self.score,'Player',self.player.hp,1)
         self.save.save_to_file(name)
     
     def check_finish(self):
@@ -315,7 +316,6 @@ class Game:
             if self.player.hitbox_rect.colliderect(trap.rect):
                 self.player.hp = 0
                 break
-            self.cooldown_hp.update()
         # chết, hồi sinh
         if self.player.hp == 0:
             self.player.die()
@@ -352,19 +352,18 @@ class Game:
                         
             #update
             self.dust_canmove_vertical_timer.update()
-            # self.dust_canmove_vertical_timer.credust()
             self.all_sprites.update(dt)
             self.check_player_collision()
 
             #draw
             self.display_surface.fill(BACKGROUND_COLOR)
             self.all_sprites.draw(self.player.hitbox_rect.center)
-            
+          
+
             for enermy in self.enermy_vip_sprites:
                 self.menu.hp(enermy.hitbox_rect.x,enermy.hitbox_rect.y,enermy.hitbox_rect.width,enermy.hitbox_rect.height,5,3,enermy.enermy_hp)
-
-            score_surface = self.font.render(f'Score: {self.score}', True, (255, 255, 255))
-            hp_surface = self.font.render(f'Hp:', True, (255, 255, 255))
+            score_surface = self.font.render(f'SCORE: {self.score}', True, (255, 255, 255))
+            hp_surface = self.font.render(f'HP:', True, (255, 255, 255))
             self.display_surface.blit(score_surface, (10, 10))
             self.display_surface.blit(hp_surface, (10,50))
             self.menu.hp_player(53,50)
@@ -372,6 +371,7 @@ class Game:
 
             pygame.display.update()
         self.bg_music.stop()
+
         if next != 3:
             self.save_map(name)
         if next == 3:
@@ -387,12 +387,18 @@ class Game:
         while state != 0:
             # chay render
             if state == 1:
+                self.menu_bg_music = pygame.mixer.Sound(join('audio', 'menu_music.ogg'))
+                self.menu_bg_music.set_volume(0.5)
+                self.menu_bg_music.play()
                 state = self.menu.render()
             # chay renderlist
             if state == 2:
                 state = self.menu.render_list()
             # chay finish
             if state == 3:
+                self.menu_bg_music = pygame.mixer.Sound(join('audio', 'menu_music.ogg'))
+                self.menu_bg_music.set_volume(0.5)
+                self.menu_bg_music.play()
                 state = self.menu.finish(self.score, "Nice",self.lvl)
             # chay map
             if state == 11 or state == 12 or state == 13:
@@ -401,16 +407,19 @@ class Game:
                     if restart == 1:
                         self.__init__()
                         self.re_map(state)
+                        self.menu_bg_music.stop()
                         state = self.run(state)
                     if restart == 0:
                         self.__init__()
                         self.setup(state)
+                        self.menu_bg_music.stop()
                         state = self.run(state)
                     if restart == 3:
                         state = 2
                 else:
                     self.__init__()
                     self.setup(state)
+                    self.menu_bg_music.stop()
                     state = self.run(state)
         sys.exit()
    

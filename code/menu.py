@@ -1,5 +1,3 @@
-import pygame
-import sys
 from settings import *
 from sprites import *
 from groups import *
@@ -145,6 +143,7 @@ class Menu:
     def render(self):
         running = True
         next = 0
+        # self.menu_bg_music.stop()
         while running:
             self.clock.tick(60)
             self.screen.blit(self.bg,(0,0))
@@ -415,13 +414,14 @@ class Menu:
     
     def hp_player(self, x, y):
         i = 0
-        while i < (self.main.player.hp)*self.hp_.get_width():
+        while i < (self.main.player.hp) * self.hp_.get_width():
             self.screen.blit(self.hp_,(x+i,y))
             i+=self.hp_.get_width()
         # for i in (0,self.main.player_hp*self.hp_.get_width(),self.hp_.get_width()):
         #     self.screen.blit(self.hp_,(x+i,y))
 
-
+    def enter_map(self):
+        self.menu_bg_music.stop()
      
 # Menu().render()
 # Menu().finish() 
