@@ -79,7 +79,6 @@ class Game:
         self.jump_audio = pygame.mixer.Sound(join('audio', 'audio_jump.wav'))
         self.jump_audio.set_volume(0.1)
         self.attack_audio = pygame.mixer.Sound(join('audio', 'audio_attack.wav'))
-        # self.attack_audio.set_volume(0.5)
         self.damage_audio = pygame.mixer.Sound(join('audio', 'audio_damage.wav'))
         self.damage_audio.set_volume(0.5)
         self.active_audio = pygame.mixer.Sound(join('audio', 'audio_active.mp3'))

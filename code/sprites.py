@@ -224,7 +224,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
 
     def input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_q] and self.is_attacking == False:
+        if keys[pygame.K_q] and self.is_attacking == False and self.is_hurt == False:
             self.is_attacking = True
             self.attack_audio.play()
         if self.can_jump:
