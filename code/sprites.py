@@ -197,7 +197,7 @@ class Saw_1(Enermy):
         self.animate(dt, flip = self.flip)
 
 class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thuộc tính cơ bản cho 1 sprite
-    def __init__(self, pos, groups, collision_sprites, frames, jump_audio, attack_audio, hp):
+    def __init__(self, pos, groups, collision_sprites, frames, jump_audio, attack_audio, death_audio, hp):
         super().__init__(pos, frames, groups)    #super() ->gọi lớp cha, super().init ở đây là khi truyền vào init của player sẽ tạo các thuộc tính trong lớp cha là animated
         #player
         self.is_player = True
@@ -220,6 +220,7 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         #audio
         self.attack_audio = attack_audio
         self.jump_audio = jump_audio
+        self.death_audio = death_audio
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -277,6 +278,8 @@ class Player(AnimatedSprite): # lớp pygame.sprite.Sprite để tạo các thu�
         elif self.direction.x and self.can_jump:
             self.set_state('walk')
         
+        if self.current_state == "death" and self.frame_index == 0:
+            self.death_audio.play()
         # Gọi hàm animate của lớp AnimatedSprite để cập nhật animation
         super().animate(dt, flip = self.flip)
         
@@ -345,18 +348,20 @@ class Coin(AnimatedSprite):
         self.animate(dt, False)
 
 class Checkpoint(AnimatedSprite):
-    def __init__(self, pos, frames, groups):
+    def __init__(self, pos, frames, groups, active_audio):
         super().__init__(pos, frames, groups)
         self.active = False
-
+        self.active_audio = active_audio
     def activate(self, player):
         self.active = True
-        player.respawn_point = self.rect.center
+        player.respawn_point = self.rect.midbottom
+        self.active_audio.play()
 
     def update(self, dt):
         self.animation_speed = 20
         if self.active:
             self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
+
         
 class Dust_canmove_horizontal(AnimatedSprite):
     # self.pos

@@ -82,8 +82,10 @@ class Game:
         # self.attack_audio.set_volume(0.5)
         self.damage_audio = pygame.mixer.Sound(join('audio', 'audio_damage.wav'))
         self.damage_audio.set_volume(0.5)
-        self.hit_audio = pygame.mixer.Sound(join('audio', 'audio_hit.wav'))
-        self.pearl_audio = pygame.mixer.Sound(join('audio', 'audio_pearl.wav'))
+        self.active_audio = pygame.mixer.Sound(join('audio', 'audio_active.mp3'))
+        self.active_audio.set_volume(0.2)
+        self.death_audio = pygame.mixer.Sound(join('audio','audio_death.ogg'))
+        self.death_audio.set_volume(0.2)
 
     def setup(self, name):
         map = load_pygame(join('data', 'tmx', f'map{name}.tmx'))
@@ -93,26 +95,28 @@ class Game:
         self.dust_vertical_up_positions = []
         self.dust_vertical_down_positions = []
 
-        # end map nguyen duc dat
-        for x, y, image in map.get_layer_by_name('End_map').tiles():
-            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
-            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map))
-        # finish nguyen duc dat
-        for x, y, image in map.get_layer_by_name('Finish').tiles():
-            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
-            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image,  (self.finish, self.all_sprites))
-        # background
-        for x, y, image in map.get_layer_by_name('Background').tiles():
-            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
-            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, self.all_sprites)  #sprite_bg ->all_sprite
         # trang trí   
         for x, y, image in map.get_layer_by_name('Decorate').tiles():  # trang trí         
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
             Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, self.all_sprites)
+        for x, y, image in map.get_layer_by_name('Background').tiles():
+            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
+            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, self.all_sprites)  #sprite_bg ->all_sprite
+        for x, y, image in map.get_layer_by_name('Decorate2').tiles():  # trang trí         
+            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
+            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, self.all_sprites)
+        # end map nguyen duc dat
+        for obj in map.get_layer_by_name('Endmap'):        
+            scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
+            Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map)) 
+        # finish nguyen duc dat
+        for x, y, image in map.get_layer_by_name('Finish').tiles():
+            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
+            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image,  (self.finish, self.all_sprites))
         # thực thể
         for obj in map.get_layer_by_name('Object'):             
             if obj.name == 'Player':
-                self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, 5) 
+                self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, 5) 
             if obj.name == 'Saw_1.1':
                 Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, -1 ,pos_start= "bottom") #1 khu vực Skeleton có thể di chuyển 
             if obj.name == 'Saw_1.2':
@@ -121,7 +125,7 @@ class Game:
                 trangthai = [0,0,0]
                 Enermy_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.enermy2_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites, trangthai)
             if obj.name == 'Checkpoint':
-                Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites))
+                Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites), self.active_audio)
             if obj.name == 'Coin':
                 Coin((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.coin_frames, (self.coin_sprites, self.all_sprites))
             if obj.name == 'Platform_horizontal':
@@ -159,32 +163,27 @@ class Game:
 
         self.dust_vertical_up_positions = []
         self.dust_vertical_down_positions = []
-        # background
+        for x, y, image in map.get_layer_by_name('Decorate').tiles():  # trang trí
+            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
+            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, (self.all_sprites))
         for x, y, image in map.get_layer_by_name('Background').tiles():
             # Phóng to hình ảnh
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
             Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, self.all_sprites)  #sprite_bg ->all_sprite
-        # trang trí   
-        for x, y, image in map.get_layer_by_name('Decorate').tiles():  # trang trí
+        for x, y, image in map.get_layer_by_name('Decorate2').tiles():  # trang trí         
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
-            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, (self.all_sprites))
-         # end_map nguyen duc dat
-        for x, y, image in map.get_layer_by_name('End_map').tiles():
-            # Phóng to hình ảnh
-            scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
-            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map))
-        # finish nguyen duc dat
+            Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE  * SCALE_FACTOR), scaled_image, self.all_sprites)
         for x, y, image in map.get_layer_by_name('Finish').tiles():
             scaled_image = pygame.transform.scale(image, (TITLE_SIZE * SCALE_FACTOR, TITLE_SIZE * SCALE_FACTOR))  
             Sprites((x * TITLE_SIZE * SCALE_FACTOR, y * TITLE_SIZE * SCALE_FACTOR), scaled_image,  (self.finish, self.all_sprites))
         
-        for obj in map.get_layer_by_name('Object'):             
+        for obj in map.get_layer_by_name('Object'):    
             if obj.name == 'Player':
                 for i in self.data:
                     if i['name'] == 'Player':
-                        self.score = i['h']
-                        self.player = Player((i['x']-5,i['y']), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, i['hp']) 
-                        self.data.remove(i)
+                        self.score = i['h']  
+                        self.player = Player((obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR ), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, 5)          
+                        # self.data.remove(i)
                         break
             if obj.name == 'Saw_1.1':
                 Saw_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 150, -1 ,pos_start= "bottom") #1 khu vực Skeleton có thể di chuyển 
@@ -197,13 +196,17 @@ class Game:
                         if rect.collidepoint(i['x'], i['y']):
                             state = [i['x'],i['y'], i['hp']]
                             Enermy_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.enermy2_frames,(self.enermy_vip_sprites, self.all_sprites), self.player_sprites,state)
+                            self.data.remove(i)
+                            break
             if obj.name == 'Checkpoint':
-                Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites))
+                Checkpoint((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.checkpoint_frames, (self.all_sprites, self.checkpoint_sprites), self.active_audio)
             
             if obj.name == 'Coin':
                 for i in self.data:
                     if i['name'] =='Coin':
                         Coin((i['x'], i['y']), self.coin_frames, (self.coin_sprites, self.all_sprites))
+                        self.data.remove(i)
+                        break
             
             if obj.name == 'Platform_horizontal':
                 Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
@@ -221,16 +224,23 @@ class Game:
         for obj in map.get_layer_by_name('Dust'):        
             scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
             Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.collision_sprites))   #sprite_collision -> collision_sprite
-
+        for obj in map.get_layer_by_name('Endmap'):        
+            scaled_image = pygame.transform.scale(obj.image, (obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR))
+            Sprites((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), scaled_image, (self.all_sprites, self.end_map)) 
+        x, y = (0,0)
         for i in self.data:
             if i['name'] == 'Checkpoint':
                 for checkpoint in self.checkpoint_sprites:
                     if checkpoint.rect.x == i['x']:
                         checkpoint.active = True
+                        x = checkpoint.rect.x
+                        y = checkpoint.rect.y
                         checkpoint.activate(self.player)
                         self.data.remove(i)
                         break
-        
+        if x != 0:
+            self.player = Player((x, y), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, i['hp']) 
+                     
         def create_dust():
             for position in self.dust_vertical_up_positions:
                 Dust_canmove_vertical(pygame.Rect(position), self.platform_frames, (self.all_sprites, self.collision_sprites), "loop", -1, "bottom")
@@ -311,6 +321,17 @@ class Game:
         if self.player.hp == 0:
             self.player.die()
     
+    def clear(self):
+        self.all_sprites.empty()
+        self.collision_sprites.empty()
+        self.trap_sprites.empty()
+        self.enermy_vip_sprites.empty()
+        self.player_sprites.empty()
+        self.coin_sprites.empty()
+        self.checkpoint_sprites.empty()
+        self.end_map.empty()
+        self.finish.empty() 
+
     def run(self, name):
         next = 0
         running = True
@@ -324,7 +345,7 @@ class Game:
                 next = 3
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                        running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.back_rect.collidepoint(event.pos):
                         running = False   
@@ -332,6 +353,7 @@ class Game:
                         
             #update
             self.dust_canmove_vertical_timer.update()
+            # self.dust_canmove_vertical_timer.credust()
             self.all_sprites.update(dt)
             self.check_player_collision()
 
@@ -360,18 +382,7 @@ class Game:
         self.clear()
         return next 
     
-    def clear(self):
-        self.all_sprites.empty()
-        self.collision_sprites.empty()
-        self.trap_sprites.empty()
-        self.enermy_vip_sprites.empty()
-        self.player_sprites.empty()
-        self.coin_sprites.empty()
-        self.checkpoint_sprites.empty()
-        self.end_map.empty()
-        self.finish.empty() 
-    
-    def run_(self):
+    def run_menu(self):
         state = 1
         restart = 0
         while state != 0:
@@ -389,26 +400,21 @@ class Game:
                 if os.path.exists(f"data_map{state}.json"):
                     restart = self.menu.note(state)
                     if restart == 1:
-                        # print("chay run")
                         self.__init__()
                         self.re_map(state)
                         state = self.run(state)
                     if restart == 0:
-                        # print("chay run")
                         self.__init__()
                         self.setup(state)
                         state = self.run(state)
                     if restart == 3:
                         state = 2
                 else:
-                    # print("chay run")
                     self.__init__()
                     self.setup(state)
                     state = self.run(state)
-        # print("HẸN GẶP LẠI")
         sys.exit()
    
-
 if __name__ == '__main__': 
     game = Game()
-    game.run_()
+    game.run_menu()

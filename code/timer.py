@@ -7,6 +7,7 @@ class Timer:
         self.active = False
         self.func = func
         self.repeat = repeat
+        self.last = 0
 
 
         if autostart == True:
@@ -21,7 +22,15 @@ class Timer:
         self.start_time = 0
         if self.repeat == True:
             self.activate()
-    
+            
+    def credust(self):
+        cur = pygame.time.get_ticks()
+        # print(cur -self.last)
+        if cur - self.last >= self.duration:
+            self.func()
+            self.last = cur
+
+
     def update(self):
         if pygame.time.get_ticks() - self.start_time >=self.duration:
             if self.func and self.start_time != 0:

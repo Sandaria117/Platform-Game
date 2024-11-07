@@ -19,7 +19,7 @@ class Menu:
         self.clock=pygame.time.Clock()  #fps
         self.screen = main.display_surface
         self.main = main
-        self.bg = pygame.image.load(r"images\New folder\snapedit_1730894044855.jpeg")
+        self.bg = pygame.image.load(join('images','New folder', 'Background_0.png'))
         self.bg = pygame.transform.scale(self.bg,(347*(1200/347),275*(1200/275)))
         self.hp_ = pygame.image.load(r"images\New folder\heart.png")
         self.hp_ = pygame.transform.scale(self.hp_,(17*1.5, 17*1.5))
@@ -179,10 +179,6 @@ class Menu:
                     else:
                        self.quit = self.font.render("Quit", True, self.white)
             pygame.display.update()
-        print("chay het render")
-        # if next == 2:
-        #     self.render_list()
-        # print(next)
         return next
     # chay danh sach map va chon map 
     def render_list(self):
@@ -237,10 +233,6 @@ class Menu:
                     else:
                        self.back = self.font1.render("Back", True, self.white)
             pygame.display.update()
-        print("chay het render_list")
-        # if next == 1:
-        #     self.render()
-        # print(next)
         return next 
     # chay khung hien thi diem sau khi finish
     def finish(self, score, time, name):
@@ -347,8 +339,6 @@ class Menu:
                     else:
                        img_restart = font.render("RESTART", True, self.white) 
             pygame.display.update() 
-        print("chay het finish")
-        # print(next)
         return next
         # if next == 1:
         #     self.render()
@@ -406,7 +396,6 @@ class Menu:
                     else:
                        self.restart = self.font1.render("RESTART", True, self.white)
             pygame.display.update()
-        print("chay het note")
         return next
     # hp quai
     def hp(self, x, y, width, height, h, hp, curhp):
