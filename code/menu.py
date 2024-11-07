@@ -10,7 +10,7 @@ class Menu:
     # color rgb
     white = (255,255,255)
     black = (0,0,0)
-    blue = (0, 0, 255)
+    blue = (100,149,237)
     red = (254,92,92)
     xam = (59, 68, 75)
     # tao cac nut bam 
@@ -352,7 +352,7 @@ class Menu:
         rect = pygame.Rect(W, H, 300,200)
 
         # touch_area cua cac nut trong note
-        font = pygame.font.Font(None, 50)
+        font = pygame.font.Font(None, 70)
         if name == 11:
             title = font.render("Map 1", True, self.white)
         if name == 12:

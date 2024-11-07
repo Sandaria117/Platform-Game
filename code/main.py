@@ -128,7 +128,7 @@ class Game:
             if obj.name == 'Coin':
                 Coin((obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR), self.coin_frames, (self.coin_sprites, self.all_sprites))
             if obj.name == 'Platform_horizontal':
-                Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
+                Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1.5, "left")
             if obj.name == "Platform_vertical":
                 Dust_canmove_vertical(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), "return", 1, "top")
             if obj.name == 'Platform_vertical_up':
@@ -151,11 +151,9 @@ class Game:
         self.dust_canmove_vertical_timer = Timer(3000, func = create_dust, repeat = True, autostart = True)
         self.dust_canmove_vertical_timer.activate()
 
-    
     def re_map(self, name):
         self.data = []
         self.clear()
-        print("chạy re_map")
         map = load_pygame(join('data', 'tmx', f'map{name}.tmx'))
         with open(f"data_map{name}.json", "r") as file:
             self.data = json.load(file)
@@ -275,11 +273,13 @@ class Game:
 
         #check checkpoint
         for checkpoint in self.checkpoint_sprites:  
-            if self.player.hitbox_rect.colliderect(checkpoint.rect):
-                for other_checkpoint in self.checkpoint_sprites:
-                    other_checkpoint.active = False            # đặt tất cả các check point cũ không active,, chỉ active checkpoint mới nhất
-                checkpoint.activate(self.player)
-                # self.coin_audio.play()
+            if not checkpoint.active:
+                if self.player.hitbox_rect.colliderect(checkpoint.rect):
+                    for other_checkpoint in self.checkpoint_sprites:
+                        other_checkpoint.active = False            # đặt tất cả các check point cũ không active,, chỉ active checkpoint mới nhất
+                    checkpoint.activate(self.player)
+                break
+            
         #check coin 
         for coin in self.coin_sprites:
             if self.player.hitbox_rect.colliderect(coin.rect):

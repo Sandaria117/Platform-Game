@@ -361,8 +361,7 @@ class Checkpoint(AnimatedSprite):
         self.animation_speed = 20
         if self.active:
             self.animate(dt, False)    #checkpoint nào gần nhất mới có animation
-
-        
+   
 class Dust_canmove_horizontal(AnimatedSprite):
     # self.pos
     def __init__(self, rect, frames, groups, direction, pos_start):
