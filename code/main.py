@@ -181,7 +181,6 @@ class Game:
                         y = i['y']
                     if i['name'] == 'Player':
                         self.score = i['h'] 
-                        self.hphphp = i['hp'] 
                         self.player = Player((x, y), (self.all_sprites, self.player_sprites), self.collision_sprites, self. player_frames, self.jump_audio, self.attack_audio, self.death_audio, i['hp'])
                         self.data.remove(i)
                         break
@@ -314,7 +313,7 @@ class Game:
                 self.player.hp = 0
                 break
         # chết, hồi sinh
-        if self.player.hp == 0:
+        if self.player.hp <= 0:
             self.player.die()
     
     def clear(self):

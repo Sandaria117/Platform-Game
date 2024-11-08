@@ -4,7 +4,6 @@ from groups import *
 from support import * 
 from menu import *
 from save import *
-import json
 
 class Save:
     def __init__(self, main):
@@ -31,9 +30,5 @@ class Save:
         self.data = []
     
     
-
-# save = Save()
-# save.save_to_file()
-# save.load_file()
 
         
