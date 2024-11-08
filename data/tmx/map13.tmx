@@ -249,7 +249,7 @@
   <object id="312" name="Checkpoint" x="1914.67" y="1184">
    <point/>
   </object>
-  <object id="330" name="Platform_vertical" x="2378.67" y="1030" width="10" height="166.667"/>
+  <object id="330" name="Platform_vertical" x="2364.67" y="1036" width="10" height="166.667"/>
   <object id="331" name="Coin" x="2416.67" y="981.333">
    <point/>
   </object>

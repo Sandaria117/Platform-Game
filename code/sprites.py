@@ -159,7 +159,7 @@ class Saw_1_2(Enermy):
         self.speed = 150
         self.direction = direction
         self.hitbox_rect = self.rect
-        # self.flip = False
+        self.flip = False
 
     def move(self, dt):
         self.rect.x += self.direction * self.speed * dt
@@ -167,10 +167,10 @@ class Saw_1_2(Enermy):
 
     def constraint(self):
         buffer = 10  # Khoảng đệm nhỏ để tránh việc đảo ngược hướng quá nhanh
-        if self.hitbox_rect.left <= self.main_rect.left + buffer:
+        if self.direction == -1 and self.rect.left <= self.main_rect.left + buffer:
             self.direction *= -1
             self.flip = True
-        if self.hitbox_rect.right >= self.main_rect.right - buffer:
+        if self.direction == 1 and self.rect.right >= self.main_rect.right - buffer:
             self.direction *= -1
             self.flip = False
         
@@ -188,11 +188,7 @@ class Saw_1_1(Enermy):
         if self.pos_start == "bottom":
             self.rect.bottom = self.main_rect.bottom
         elif self.pos_start == "top":
-            self.rect.top = self.main_rect.top
-        # if self.pos_start == "left":
-        #     self.rect.left = self.main_rect.left
-        # elif self.pos_start == "right":
-        #     self.rect.right = self.main_rect.right                 
+            self.rect.top = self.main_rect.top          
         self.speed = 150
         self.direction = direction
         self.hitbox_rect = self.rect
@@ -204,10 +200,10 @@ class Saw_1_1(Enermy):
 
     def constraint(self):
         buffer = 10  # Khoảng đệm nhỏ để tránh việc đảo ngược hướng quá nhanh
-        if self.hitbox_rect.top <= self.main_rect.top + buffer:
+        if self.direction == -1 and self.rect.top <= self.main_rect.top + buffer:
             self.direction *= -1                
             self.flip = True
-        if self.hitbox_rect.bottom >= self.main_rect.bottom - buffer:
+        if self.direction == 1 and self.rect.bottom >= self.main_rect.bottom - buffer:
             self.direction *= -1
             self.flip = False
             
@@ -403,9 +399,9 @@ class Dust_canmove_horizontal(AnimatedSprite):
 
     def check_flip(self):
         buffer = 10
-        if self.rect.left <= self.main_rect.left + buffer:
+        if self.direction_x == -1 and self.rect.left <= self.main_rect.left + buffer:
             self.direction_x *= -1
-        if self.rect.right >= self.main_rect.right - buffer:
+        if self.direction_x == 1 and self.rect.right >= self.main_rect.right - buffer:
             self.direction_x *= -1
 
     def update(self, dt):
@@ -435,9 +431,9 @@ class Dust_canmove_vertical(AnimatedSprite):
     
     def check_flip(self):
         buffer = 10
-        if self.rect.bottom > self.main_rect.bottom - buffer:
+        if self.direction_y == 1 and self.rect.bottom > self.main_rect.bottom - buffer:
             self.direction_y *= -1
-        elif self.rect.top < self.main_rect.top + buffer:
+        elif self.direction_y == -1 and self.rect.top < self.main_rect.top + buffer:
             self.direction_y *= -1
 
     def destroy(self):

@@ -9,7 +9,7 @@ class Game:
     def __init__(self):
         pygame.init() #khởi tạo
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) #bên setting
-        pygame.display.set_caption("game test") #tiêu đề 
+        pygame.display.set_caption("Flatformer") #tiêu đề 
         self.clock=pygame.time.Clock()  #fps
         self.running = True
         
@@ -28,11 +28,8 @@ class Game:
 
         #import
         self.import_assets()
-        # self.setup() #import bên map vào
-        # self.bg_music.stop()
-        # self.bg_music.play(-1)
 
-        #####
+        #save
         self.save = Save(self)
         self.menu = Menu(self)
         self.data = []
@@ -126,7 +123,7 @@ class Game:
             if obj.name == 'Saw_1.1':
                 Saw_1_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "bottom") #1 khu vực Skeleton có thể di chuyển 
             if obj.name == 'Saw_1.2':
-                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 1 , "left")
+                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "right")
             if obj.name == 'Platform_horizontal':
                 Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
             if obj.name == "Platform_vertical":
@@ -210,7 +207,7 @@ class Game:
             if obj.name == 'Saw_1.1':
                 Saw_1_1(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "bottom") #1 khu vực Skeleton có thể di chuyển 
             if obj.name == 'Saw_1.2':
-                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), 1 , "left")
+                Saw_1_2(pygame.Rect(obj.x *SCALE_FACTOR , obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height* SCALE_FACTOR), self.saw_frames,(self.trap_sprites, self.all_sprites), -1 , "right")
             if obj.name == 'Platform_horizontal':
                 Dust_canmove_horizontal(pygame.Rect(obj.x * SCALE_FACTOR, obj.y * SCALE_FACTOR, obj.width * SCALE_FACTOR, obj.height * SCALE_FACTOR), self.platform_frames, (self.all_sprites, self.collision_sprites), 1, "left")
             
