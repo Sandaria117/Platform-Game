@@ -30,7 +30,6 @@ class Timer:
             self.func()
             self.last = cur
 
-
     def update(self):
         if pygame.time.get_ticks() - self.start_time >=self.duration:
             if self.func and self.start_time != 0:

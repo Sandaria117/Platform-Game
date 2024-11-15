@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="400" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="289">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="400" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="295">
  <tileset firstgid="1" source="../tsx/dust.tsx"/>
  <tileset firstgid="257" source="../tsx/bg01.tsx"/>
  <tileset firstgid="400" source="../tsx/bg02.tsx"/>
@@ -226,7 +226,7 @@
   <object id="24" name="Player" x="336.5" y="1077">
    <point/>
   </object>
-  <object id="130" name="Checkpoint" x="655.5" y="1089">
+  <object id="130" name="Checkpoint" x="652.167" y="1083.67">
    <point/>
   </object>
   <object id="264" name="Checkpoint" x="1187.5" y="868">
@@ -240,211 +240,216 @@
   <object id="259" name="Platform_vertical_down" x="1291.5" y="907" width="18" height="325.5"/>
   <object id="265" name="Saw_1.2" x="444" y="1119.5" width="112" height="22"/>
   <object id="263" name="Enermy_2" x="1406" y="1047" width="199.5" height="112.5"/>
-  <object id="266" name="Coin" x="1294.5" y="1026.5">
+  <object id="266" name="Coin" x="1291.83" y="1143.17">
    <point/>
   </object>
-  <object id="274" name="Platform_vertical" x="1836" y="1053.5" width="12" height="172"/>
-  <object id="280" name="Saw_1.1" x="1640.5" y="1124.5" width="18.5" height="85"/>
- </objectgroup>
- <objectgroup id="6" name="Endmap">
-  <object id="25" gid="855" x="58" y="1368" width="16" height="16"/>
-  <object id="182" gid="855" x="1679" y="1368" width="16" height="16"/>
-  <object id="134" gid="855" x="9" y="1368" width="16" height="16"/>
-  <object id="231" gid="855" x="1630" y="1368" width="16" height="16"/>
-  <object id="120" gid="855" x="843.5" y="1368" width="16" height="16"/>
-  <object id="183" gid="855" x="2464.5" y="1368" width="16" height="16"/>
-  <object id="72" gid="855" x="450" y="1368" width="16" height="16"/>
-  <object id="135" gid="855" x="2071" y="1368" width="16" height="16"/>
-  <object id="73" gid="855" x="1235.5" y="1368" width="16" height="16"/>
-  <object id="184" gid="855" x="2856.5" y="1368" width="16" height="16"/>
-  <object id="48" gid="855" x="254" y="1368" width="16" height="16"/>
-  <object id="159" gid="855" x="1875" y="1368" width="16" height="16"/>
-  <object id="97" gid="855" x="1039.5" y="1368" width="16" height="16"/>
-  <object id="185" gid="855" x="2660.5" y="1368" width="16" height="16"/>
-  <object id="49" gid="855" x="646" y="1368" width="16" height="16"/>
-  <object id="136" gid="855" x="2267" y="1368" width="16" height="16"/>
-  <object id="74" gid="855" x="1431.5" y="1368" width="16" height="16"/>
-  <object id="186" gid="855" x="3052.5" y="1368" width="16" height="16"/>
-  <object id="26" gid="855" x="73.5" y="1368" width="16" height="16"/>
-  <object id="181" gid="855" x="1694.5" y="1368" width="16" height="16"/>
-  <object id="133" gid="855" x="24.5" y="1368" width="16" height="16"/>
-  <object id="232" gid="855" x="1645.5" y="1368" width="16" height="16"/>
-  <object id="119" gid="855" x="859" y="1368" width="16" height="16"/>
-  <object id="187" gid="855" x="2480" y="1368" width="16" height="16"/>
-  <object id="71" gid="855" x="465.5" y="1368" width="16" height="16"/>
-  <object id="137" gid="855" x="2086.5" y="1368" width="16" height="16"/>
-  <object id="75" gid="855" x="1251" y="1368" width="16" height="16"/>
-  <object id="188" gid="855" x="2872" y="1368" width="16" height="16"/>
-  <object id="47" gid="855" x="269.5" y="1368" width="16" height="16"/>
-  <object id="160" gid="855" x="1890.5" y="1368" width="16" height="16"/>
-  <object id="98" gid="855" x="1055" y="1368" width="16" height="16"/>
-  <object id="189" gid="855" x="2676" y="1368" width="16" height="16"/>
-  <object id="50" gid="855" x="661.5" y="1368" width="16" height="16"/>
-  <object id="138" gid="855" x="2282.5" y="1368" width="16" height="16"/>
-  <object id="76" gid="855" x="1447" y="1368" width="16" height="16"/>
-  <object id="190" gid="855" x="3068" y="1368" width="16" height="16"/>
-  <object id="27" gid="855" x="90.5" y="1368" width="16" height="16"/>
-  <object id="180" gid="855" x="1711.5" y="1368" width="16" height="16"/>
-  <object id="132" gid="855" x="41.5" y="1368" width="16" height="16"/>
-  <object id="233" gid="855" x="1662.5" y="1368" width="16" height="16"/>
-  <object id="118" gid="855" x="876" y="1368" width="16" height="16"/>
-  <object id="191" gid="855" x="2497" y="1368" width="16" height="16"/>
-  <object id="70" gid="855" x="482.5" y="1368" width="16" height="16"/>
-  <object id="139" gid="855" x="2103.5" y="1368" width="16" height="16"/>
-  <object id="77" gid="855" x="1268" y="1368" width="16" height="16"/>
-  <object id="192" gid="855" x="2889" y="1368" width="16" height="16"/>
-  <object id="46" gid="855" x="286.5" y="1368" width="16" height="16"/>
-  <object id="161" gid="855" x="1907.5" y="1368" width="16" height="16"/>
-  <object id="99" gid="855" x="1072" y="1368" width="16" height="16"/>
-  <object id="193" gid="855" x="2693" y="1368" width="16" height="16"/>
-  <object id="51" gid="855" x="678.5" y="1368" width="16" height="16"/>
-  <object id="140" gid="855" x="2299.5" y="1368" width="16" height="16"/>
-  <object id="78" gid="855" x="1464" y="1368" width="16" height="16"/>
-  <object id="194" gid="855" x="3085" y="1368" width="16" height="16"/>
-  <object id="28" gid="855" x="107.5" y="1368" width="16" height="16"/>
-  <object id="179" gid="855" x="1728.5" y="1368" width="16" height="16"/>
-  <object id="117" gid="855" x="893" y="1368" width="16" height="16"/>
-  <object id="195" gid="855" x="2514" y="1368" width="16" height="16"/>
-  <object id="69" gid="855" x="499.5" y="1368" width="16" height="16"/>
-  <object id="141" gid="855" x="2120.5" y="1368" width="16" height="16"/>
-  <object id="79" gid="855" x="1285" y="1368" width="16" height="16"/>
-  <object id="196" gid="855" x="2906" y="1368" width="16" height="16"/>
-  <object id="45" gid="855" x="303.5" y="1368" width="16" height="16"/>
-  <object id="162" gid="855" x="1924.5" y="1368" width="16" height="16"/>
-  <object id="100" gid="855" x="1089" y="1368" width="16" height="16"/>
-  <object id="197" gid="855" x="2710" y="1368" width="16" height="16"/>
-  <object id="52" gid="855" x="695.5" y="1368" width="16" height="16"/>
-  <object id="142" gid="855" x="2316.5" y="1368" width="16" height="16"/>
-  <object id="80" gid="855" x="1481" y="1368" width="16" height="16"/>
-  <object id="198" gid="855" x="3102" y="1368" width="16" height="16"/>
-  <object id="29" gid="855" x="123.5" y="1368" width="16" height="16"/>
-  <object id="178" gid="855" x="1744.5" y="1368" width="16" height="16"/>
-  <object id="116" gid="855" x="909" y="1368" width="16" height="16"/>
-  <object id="199" gid="855" x="2530" y="1368" width="16" height="16"/>
-  <object id="68" gid="855" x="515.5" y="1368" width="16" height="16"/>
-  <object id="143" gid="855" x="2136.5" y="1368" width="16" height="16"/>
-  <object id="81" gid="855" x="1301" y="1368" width="16" height="16"/>
-  <object id="200" gid="855" x="2922" y="1368" width="16" height="16"/>
-  <object id="44" gid="855" x="319.5" y="1368" width="16" height="16"/>
-  <object id="163" gid="855" x="1940.5" y="1368" width="16" height="16"/>
-  <object id="101" gid="855" x="1105" y="1368" width="16" height="16"/>
-  <object id="201" gid="855" x="2726" y="1368" width="16" height="16"/>
-  <object id="53" gid="855" x="711.5" y="1368" width="16" height="16"/>
-  <object id="144" gid="855" x="2332.5" y="1368" width="16" height="16"/>
-  <object id="82" gid="855" x="1497" y="1368" width="16" height="16"/>
-  <object id="202" gid="855" x="3118" y="1368" width="16" height="16"/>
-  <object id="30" gid="855" x="140.5" y="1368" width="16" height="16"/>
-  <object id="177" gid="855" x="1761.5" y="1368" width="16" height="16"/>
-  <object id="115" gid="855" x="926" y="1368" width="16" height="16"/>
-  <object id="203" gid="855" x="2547" y="1368" width="16" height="16"/>
-  <object id="67" gid="855" x="532.5" y="1368" width="16" height="16"/>
-  <object id="145" gid="855" x="2153.5" y="1368" width="16" height="16"/>
-  <object id="83" gid="855" x="1318" y="1368" width="16" height="16"/>
-  <object id="204" gid="855" x="2939" y="1368" width="16" height="16"/>
-  <object id="43" gid="855" x="336.5" y="1368" width="16" height="16"/>
-  <object id="164" gid="855" x="1957.5" y="1368" width="16" height="16"/>
-  <object id="102" gid="855" x="1122" y="1368" width="16" height="16"/>
-  <object id="205" gid="855" x="2743" y="1368" width="16" height="16"/>
-  <object id="54" gid="855" x="728.5" y="1368" width="16" height="16"/>
-  <object id="146" gid="855" x="2349.5" y="1368" width="16" height="16"/>
-  <object id="84" gid="855" x="1514" y="1368" width="16" height="16"/>
-  <object id="206" gid="855" x="3135" y="1368" width="16" height="16"/>
-  <object id="31" gid="855" x="157" y="1368" width="16" height="16"/>
-  <object id="176" gid="855" x="1778" y="1368" width="16" height="16"/>
-  <object id="114" gid="855" x="942.5" y="1368" width="16" height="16"/>
-  <object id="207" gid="855" x="2563.5" y="1368" width="16" height="16"/>
-  <object id="66" gid="855" x="549" y="1368" width="16" height="16"/>
-  <object id="147" gid="855" x="2170" y="1368" width="16" height="16"/>
-  <object id="85" gid="855" x="1334.5" y="1368" width="16" height="16"/>
-  <object id="208" gid="855" x="2955.5" y="1368" width="16" height="16"/>
-  <object id="42" gid="855" x="353" y="1368" width="16" height="16"/>
-  <object id="165" gid="855" x="1974" y="1368" width="16" height="16"/>
-  <object id="103" gid="855" x="1138.5" y="1368" width="16" height="16"/>
-  <object id="209" gid="855" x="2759.5" y="1368" width="16" height="16"/>
-  <object id="55" gid="855" x="745" y="1368" width="16" height="16"/>
-  <object id="148" gid="855" x="2366" y="1368" width="16" height="16"/>
-  <object id="86" gid="855" x="1530.5" y="1368" width="16" height="16"/>
-  <object id="210" gid="855" x="3151.5" y="1368" width="16" height="16"/>
-  <object id="32" gid="855" x="174" y="1368" width="16" height="16"/>
-  <object id="175" gid="855" x="1795" y="1368" width="16" height="16"/>
-  <object id="113" gid="855" x="959.5" y="1368" width="16" height="16"/>
-  <object id="211" gid="855" x="2580.5" y="1368" width="16" height="16"/>
-  <object id="65" gid="855" x="566" y="1368" width="16" height="16"/>
-  <object id="149" gid="855" x="2187" y="1368" width="16" height="16"/>
-  <object id="87" gid="855" x="1351.5" y="1368" width="16" height="16"/>
-  <object id="212" gid="855" x="2972.5" y="1368" width="16" height="16"/>
-  <object id="41" gid="855" x="370" y="1368" width="16" height="16"/>
-  <object id="166" gid="855" x="1991" y="1368" width="16" height="16"/>
-  <object id="104" gid="855" x="1155.5" y="1368" width="16" height="16"/>
-  <object id="213" gid="855" x="2776.5" y="1368" width="16" height="16"/>
-  <object id="56" gid="855" x="762" y="1368" width="16" height="16"/>
-  <object id="150" gid="855" x="2383" y="1368" width="16" height="16"/>
-  <object id="88" gid="855" x="1547.5" y="1368" width="16" height="16"/>
-  <object id="214" gid="855" x="3168.5" y="1368" width="16" height="16"/>
-  <object id="33" gid="855" x="190.5" y="1368" width="16" height="16"/>
-  <object id="174" gid="855" x="1811.5" y="1368" width="16" height="16"/>
-  <object id="112" gid="855" x="976" y="1368" width="16" height="16"/>
-  <object id="215" gid="855" x="2597" y="1368" width="16" height="16"/>
-  <object id="64" gid="855" x="582.5" y="1368" width="16" height="16"/>
-  <object id="151" gid="855" x="2203.5" y="1368" width="16" height="16"/>
-  <object id="89" gid="855" x="1368" y="1368" width="16" height="16"/>
-  <object id="216" gid="855" x="2989" y="1368" width="16" height="16"/>
-  <object id="40" gid="855" x="386.5" y="1368" width="16" height="16"/>
-  <object id="167" gid="855" x="2007.5" y="1368" width="16" height="16"/>
-  <object id="105" gid="855" x="1172" y="1368" width="16" height="16"/>
-  <object id="217" gid="855" x="2793" y="1368" width="16" height="16"/>
-  <object id="57" gid="855" x="778.5" y="1368" width="16" height="16"/>
-  <object id="152" gid="855" x="2399.5" y="1368" width="16" height="16"/>
-  <object id="90" gid="855" x="1564" y="1368" width="16" height="16"/>
-  <object id="218" gid="855" x="3185" y="1368" width="16" height="16"/>
-  <object id="34" gid="855" x="207.5" y="1368" width="16" height="16"/>
-  <object id="173" gid="855" x="1828.5" y="1368" width="16" height="16"/>
-  <object id="111" gid="855" x="993" y="1368" width="16" height="16"/>
-  <object id="219" gid="855" x="2614" y="1368" width="16" height="16"/>
-  <object id="63" gid="855" x="599.5" y="1368" width="16" height="16"/>
-  <object id="153" gid="855" x="2220.5" y="1368" width="16" height="16"/>
-  <object id="91" gid="855" x="1385" y="1368" width="16" height="16"/>
-  <object id="220" gid="855" x="3006" y="1368" width="16" height="16"/>
-  <object id="39" gid="855" x="403.5" y="1368" width="16" height="16"/>
-  <object id="168" gid="855" x="2024.5" y="1368" width="16" height="16"/>
-  <object id="106" gid="855" x="1189" y="1368" width="16" height="16"/>
-  <object id="221" gid="855" x="2810" y="1368" width="16" height="16"/>
-  <object id="58" gid="855" x="795.5" y="1368" width="16" height="16"/>
-  <object id="154" gid="855" x="2416.5" y="1368" width="16" height="16"/>
-  <object id="92" gid="855" x="1581" y="1368" width="16" height="16"/>
-  <object id="222" gid="855" x="3202" y="1368" width="16" height="16"/>
-  <object id="35" gid="855" x="223" y="1368" width="16" height="16"/>
-  <object id="172" gid="855" x="1844" y="1368" width="16" height="16"/>
-  <object id="110" gid="855" x="1008.5" y="1368" width="16" height="16"/>
-  <object id="223" gid="855" x="2629.5" y="1368" width="16" height="16"/>
-  <object id="62" gid="855" x="615" y="1368" width="16" height="16"/>
-  <object id="155" gid="855" x="2236" y="1368" width="16" height="16"/>
-  <object id="93" gid="855" x="1400.5" y="1368" width="16" height="16"/>
-  <object id="224" gid="855" x="3021.5" y="1368" width="16" height="16"/>
-  <object id="38" gid="855" x="419" y="1368" width="16" height="16"/>
-  <object id="169" gid="855" x="2040" y="1368" width="16" height="16"/>
-  <object id="107" gid="855" x="1204.5" y="1368" width="16" height="16"/>
-  <object id="225" gid="855" x="2825.5" y="1368" width="16" height="16"/>
-  <object id="59" gid="855" x="811" y="1368" width="16" height="16"/>
-  <object id="156" gid="855" x="2432" y="1368" width="16" height="16"/>
-  <object id="94" gid="855" x="1596.5" y="1368" width="16" height="16"/>
-  <object id="226" gid="855" x="3217.5" y="1368" width="16" height="16"/>
-  <object id="36" gid="855" x="238.5" y="1368" width="16" height="16"/>
-  <object id="171" gid="855" x="1859.5" y="1368" width="16" height="16"/>
-  <object id="109" gid="855" x="1024" y="1368" width="16" height="16"/>
-  <object id="227" gid="855" x="2645" y="1368" width="16" height="16"/>
-  <object id="61" gid="855" x="630.5" y="1368" width="16" height="16"/>
-  <object id="157" gid="855" x="2251.5" y="1368" width="16" height="16"/>
-  <object id="95" gid="855" x="1416" y="1368" width="16" height="16"/>
-  <object id="228" gid="855" x="3037" y="1368" width="16" height="16"/>
-  <object id="37" gid="855" x="434.5" y="1368" width="16" height="16"/>
-  <object id="170" gid="855" x="2055.5" y="1368" width="16" height="16"/>
-  <object id="108" gid="855" x="1220" y="1368" width="16" height="16"/>
-  <object id="229" gid="855" x="2841" y="1368" width="16" height="16"/>
-  <object id="60" gid="855" x="826.5" y="1368" width="16" height="16"/>
-  <object id="158" gid="855" x="2447.5" y="1368" width="16" height="16"/>
-  <object id="96" gid="855" x="1612" y="1368" width="16" height="16"/>
-  <object id="230" gid="855" x="3233" y="1368" width="16" height="16"/>
+  <object id="274" name="Platform_vertical" x="1868.67" y="1056.17" width="12" height="172"/>
+  <object id="280" name="Saw_1.1" x="1640.5" y="1103.83" width="18.5" height="105.667"/>
+  <object id="25" name="Spike" gid="855" x="58" y="1368" width="16" height="16"/>
+  <object id="182" name="Spike" gid="855" x="1679" y="1368" width="16" height="16"/>
+  <object id="134" name="Spike" gid="855" x="9" y="1368" width="16" height="16"/>
+  <object id="231" name="Spike" gid="855" x="1630" y="1368" width="16" height="16"/>
+  <object id="120" name="Spike" gid="855" x="843.5" y="1368" width="16" height="16"/>
+  <object id="183" name="Spike" gid="855" x="2464.5" y="1368" width="16" height="16"/>
+  <object id="72" name="Spike" gid="855" x="450" y="1368" width="16" height="16"/>
+  <object id="135" name="Spike" gid="855" x="2071" y="1368" width="16" height="16"/>
+  <object id="73" name="Spike" gid="855" x="1235.5" y="1368" width="16" height="16"/>
+  <object id="184" name="Spike" gid="855" x="2856.5" y="1368" width="16" height="16"/>
+  <object id="48" name="Spike" gid="855" x="254" y="1368" width="16" height="16"/>
+  <object id="159" name="Spike" gid="855" x="1875" y="1368" width="16" height="16"/>
+  <object id="97" name="Spike" gid="855" x="1039.5" y="1368" width="16" height="16"/>
+  <object id="185" name="Spike" gid="855" x="2660.5" y="1368" width="16" height="16"/>
+  <object id="49" name="Spike" gid="855" x="646" y="1368" width="16" height="16"/>
+  <object id="136" name="Spike" gid="855" x="2267" y="1368" width="16" height="16"/>
+  <object id="74" name="Spike" gid="855" x="1431.5" y="1368" width="16" height="16"/>
+  <object id="186" name="Spike" gid="855" x="3052.5" y="1368" width="16" height="16"/>
+  <object id="26" name="Spike" gid="855" x="73.5" y="1368" width="16" height="16"/>
+  <object id="181" name="Spike" gid="855" x="1694.5" y="1368" width="16" height="16"/>
+  <object id="133" name="Spike" gid="855" x="24.5" y="1368" width="16" height="16"/>
+  <object id="232" name="Spike" gid="855" x="1645.5" y="1368" width="16" height="16"/>
+  <object id="119" name="Spike" gid="855" x="859" y="1368" width="16" height="16"/>
+  <object id="187" name="Spike" gid="855" x="2480" y="1368" width="16" height="16"/>
+  <object id="71" name="Spike" gid="855" x="465.5" y="1368" width="16" height="16"/>
+  <object id="137" name="Spike" gid="855" x="2086.5" y="1368" width="16" height="16"/>
+  <object id="75" name="Spike" gid="855" x="1251" y="1368" width="16" height="16"/>
+  <object id="188" name="Spike" gid="855" x="2872" y="1368" width="16" height="16"/>
+  <object id="47" name="Spike" gid="855" x="269.5" y="1368" width="16" height="16"/>
+  <object id="160" name="Spike" gid="855" x="1890.5" y="1368" width="16" height="16"/>
+  <object id="98" name="Spike" gid="855" x="1055" y="1368" width="16" height="16"/>
+  <object id="189" name="Spike" gid="855" x="2676" y="1368" width="16" height="16"/>
+  <object id="50" name="Spike" gid="855" x="661.5" y="1368" width="16" height="16"/>
+  <object id="138" name="Spike" gid="855" x="2282.5" y="1368" width="16" height="16"/>
+  <object id="76" name="Spike" gid="855" x="1447" y="1368" width="16" height="16"/>
+  <object id="190" name="Spike" gid="855" x="3068" y="1368" width="16" height="16"/>
+  <object id="27" name="Spike" gid="855" x="90.5" y="1368" width="16" height="16"/>
+  <object id="180" name="Spike" gid="855" x="1711.5" y="1368" width="16" height="16"/>
+  <object id="132" name="Spike" gid="855" x="41.5" y="1368" width="16" height="16"/>
+  <object id="233" name="Spike" gid="855" x="1662.5" y="1368" width="16" height="16"/>
+  <object id="118" name="Spike" gid="855" x="876" y="1368" width="16" height="16"/>
+  <object id="191" name="Spike" gid="855" x="2497" y="1368" width="16" height="16"/>
+  <object id="70" name="Spike" gid="855" x="482.5" y="1368" width="16" height="16"/>
+  <object id="139" name="Spike" gid="855" x="2103.5" y="1368" width="16" height="16"/>
+  <object id="77" name="Spike" gid="855" x="1268" y="1368" width="16" height="16"/>
+  <object id="192" name="Spike" gid="855" x="2889" y="1368" width="16" height="16"/>
+  <object id="46" name="Spike" gid="855" x="286.5" y="1368" width="16" height="16"/>
+  <object id="161" name="Spike" gid="855" x="1907.5" y="1368" width="16" height="16"/>
+  <object id="99" name="Spike" gid="855" x="1072" y="1368" width="16" height="16"/>
+  <object id="193" name="Spike" gid="855" x="2693" y="1368" width="16" height="16"/>
+  <object id="51" name="Spike" gid="855" x="678.5" y="1368" width="16" height="16"/>
+  <object id="140" name="Spike" gid="855" x="2299.5" y="1368" width="16" height="16"/>
+  <object id="78" name="Spike" gid="855" x="1464" y="1368" width="16" height="16"/>
+  <object id="194" name="Spike" gid="855" x="3085" y="1368" width="16" height="16"/>
+  <object id="28" name="Spike" gid="855" x="107.5" y="1368" width="16" height="16"/>
+  <object id="179" name="Spike" gid="855" x="1728.5" y="1368" width="16" height="16"/>
+  <object id="117" name="Spike" gid="855" x="893" y="1368" width="16" height="16"/>
+  <object id="195" name="Spike" gid="855" x="2514" y="1368" width="16" height="16"/>
+  <object id="69" name="Spike" gid="855" x="499.5" y="1368" width="16" height="16"/>
+  <object id="141" name="Spike" gid="855" x="2120.5" y="1368" width="16" height="16"/>
+  <object id="79" name="Spike" gid="855" x="1285" y="1368" width="16" height="16"/>
+  <object id="196" name="Spike" gid="855" x="2906" y="1368" width="16" height="16"/>
+  <object id="45" name="Spike" gid="855" x="303.5" y="1368" width="16" height="16"/>
+  <object id="162" name="Spike" gid="855" x="1924.5" y="1368" width="16" height="16"/>
+  <object id="100" name="Spike" gid="855" x="1089" y="1368" width="16" height="16"/>
+  <object id="197" name="Spike" gid="855" x="2710" y="1368" width="16" height="16"/>
+  <object id="52" name="Spike" gid="855" x="695.5" y="1368" width="16" height="16"/>
+  <object id="142" name="Spike" gid="855" x="2316.5" y="1368" width="16" height="16"/>
+  <object id="80" name="Spike" gid="855" x="1481" y="1368" width="16" height="16"/>
+  <object id="198" name="Spike" gid="855" x="3102" y="1368" width="16" height="16"/>
+  <object id="29" name="Spike" gid="855" x="123.5" y="1368" width="16" height="16"/>
+  <object id="178" name="Spike" gid="855" x="1744.5" y="1368" width="16" height="16"/>
+  <object id="116" name="Spike" gid="855" x="909" y="1368" width="16" height="16"/>
+  <object id="199" name="Spike" gid="855" x="2530" y="1368" width="16" height="16"/>
+  <object id="68" name="Spike" gid="855" x="515.5" y="1368" width="16" height="16"/>
+  <object id="143" name="Spike" gid="855" x="2136.5" y="1368" width="16" height="16"/>
+  <object id="81" name="Spike" gid="855" x="1301" y="1368" width="16" height="16"/>
+  <object id="200" name="Spike" gid="855" x="2922" y="1368" width="16" height="16"/>
+  <object id="44" name="Spike" gid="855" x="319.5" y="1368" width="16" height="16"/>
+  <object id="163" name="Spike" gid="855" x="1940.5" y="1368" width="16" height="16"/>
+  <object id="101" name="Spike" gid="855" x="1105" y="1368" width="16" height="16"/>
+  <object id="201" name="Spike" gid="855" x="2726" y="1368" width="16" height="16"/>
+  <object id="53" name="Spike" gid="855" x="711.5" y="1368" width="16" height="16"/>
+  <object id="144" name="Spike" gid="855" x="2332.5" y="1368" width="16" height="16"/>
+  <object id="82" name="Spike" gid="855" x="1497" y="1368" width="16" height="16"/>
+  <object id="202" name="Spike" gid="855" x="3118" y="1368" width="16" height="16"/>
+  <object id="30" name="Spike" gid="855" x="140.5" y="1368" width="16" height="16"/>
+  <object id="177" name="Spike" gid="855" x="1761.5" y="1368" width="16" height="16"/>
+  <object id="115" name="Spike" gid="855" x="926" y="1368" width="16" height="16"/>
+  <object id="203" name="Spike" gid="855" x="2547" y="1368" width="16" height="16"/>
+  <object id="67" name="Spike" gid="855" x="532.5" y="1368" width="16" height="16"/>
+  <object id="145" name="Spike" gid="855" x="2153.5" y="1368" width="16" height="16"/>
+  <object id="83" name="Spike" gid="855" x="1318" y="1368" width="16" height="16"/>
+  <object id="204" name="Spike" gid="855" x="2939" y="1368" width="16" height="16"/>
+  <object id="43" name="Spike" gid="855" x="336.5" y="1368" width="16" height="16"/>
+  <object id="164" name="Spike" gid="855" x="1957.5" y="1368" width="16" height="16"/>
+  <object id="102" name="Spike" gid="855" x="1122" y="1368" width="16" height="16"/>
+  <object id="205" name="Spike" gid="855" x="2743" y="1368" width="16" height="16"/>
+  <object id="54" name="Spike" gid="855" x="728.5" y="1368" width="16" height="16"/>
+  <object id="146" name="Spike" gid="855" x="2349.5" y="1368" width="16" height="16"/>
+  <object id="84" name="Spike" gid="855" x="1514" y="1368" width="16" height="16"/>
+  <object id="206" name="Spike" gid="855" x="3135" y="1368" width="16" height="16"/>
+  <object id="31" name="Spike" gid="855" x="157" y="1368" width="16" height="16"/>
+  <object id="176" name="Spike" gid="855" x="1778" y="1368" width="16" height="16"/>
+  <object id="114" name="Spike" gid="855" x="942.5" y="1368" width="16" height="16"/>
+  <object id="207" name="Spike" gid="855" x="2563.5" y="1368" width="16" height="16"/>
+  <object id="66" name="Spike" gid="855" x="549" y="1368" width="16" height="16"/>
+  <object id="147" name="Spike" gid="855" x="2170" y="1368" width="16" height="16"/>
+  <object id="85" name="Spike" gid="855" x="1334.5" y="1368" width="16" height="16"/>
+  <object id="208" name="Spike" gid="855" x="2955.5" y="1368" width="16" height="16"/>
+  <object id="42" name="Spike" gid="855" x="353" y="1368" width="16" height="16"/>
+  <object id="165" name="Spike" gid="855" x="1974" y="1368" width="16" height="16"/>
+  <object id="103" name="Spike" gid="855" x="1138.5" y="1368" width="16" height="16"/>
+  <object id="209" name="Spike" gid="855" x="2759.5" y="1368" width="16" height="16"/>
+  <object id="55" name="Spike" gid="855" x="745" y="1368" width="16" height="16"/>
+  <object id="148" name="Spike" gid="855" x="2366" y="1368" width="16" height="16"/>
+  <object id="86" name="Spike" gid="855" x="1530.5" y="1368" width="16" height="16"/>
+  <object id="210" name="Spike" gid="855" x="3151.5" y="1368" width="16" height="16"/>
+  <object id="32" name="Spike" gid="855" x="174" y="1368" width="16" height="16"/>
+  <object id="175" name="Spike" gid="855" x="1795" y="1368" width="16" height="16"/>
+  <object id="113" name="Spike" gid="855" x="959.5" y="1368" width="16" height="16"/>
+  <object id="211" name="Spike" gid="855" x="2580.5" y="1368" width="16" height="16"/>
+  <object id="65" name="Spike" gid="855" x="566" y="1368" width="16" height="16"/>
+  <object id="149" name="Spike" gid="855" x="2187" y="1368" width="16" height="16"/>
+  <object id="87" name="Spike" gid="855" x="1351.5" y="1368" width="16" height="16"/>
+  <object id="212" name="Spike" gid="855" x="2972.5" y="1368" width="16" height="16"/>
+  <object id="41" name="Spike" gid="855" x="370" y="1368" width="16" height="16"/>
+  <object id="166" name="Spike" gid="855" x="1991" y="1368" width="16" height="16"/>
+  <object id="104" name="Spike" gid="855" x="1155.5" y="1368" width="16" height="16"/>
+  <object id="213" name="Spike" gid="855" x="2776.5" y="1368" width="16" height="16"/>
+  <object id="56" name="Spike" gid="855" x="762" y="1368" width="16" height="16"/>
+  <object id="150" name="Spike" gid="855" x="2383" y="1368" width="16" height="16"/>
+  <object id="88" name="Spike" gid="855" x="1547.5" y="1368" width="16" height="16"/>
+  <object id="214" name="Spike" gid="855" x="3168.5" y="1368" width="16" height="16"/>
+  <object id="33" name="Spike" gid="855" x="190.5" y="1368" width="16" height="16"/>
+  <object id="174" name="Spike" gid="855" x="1811.5" y="1368" width="16" height="16"/>
+  <object id="112" name="Spike" gid="855" x="976" y="1368" width="16" height="16"/>
+  <object id="215" name="Spike" gid="855" x="2597" y="1368" width="16" height="16"/>
+  <object id="64" name="Spike" gid="855" x="582.5" y="1368" width="16" height="16"/>
+  <object id="151" name="Spike" gid="855" x="2203.5" y="1368" width="16" height="16"/>
+  <object id="89" name="Spike" gid="855" x="1368" y="1368" width="16" height="16"/>
+  <object id="216" name="Spike" gid="855" x="2989" y="1368" width="16" height="16"/>
+  <object id="40" name="Spike" gid="855" x="386.5" y="1368" width="16" height="16"/>
+  <object id="167" name="Spike" gid="855" x="2007.5" y="1368" width="16" height="16"/>
+  <object id="105" name="Spike" gid="855" x="1172" y="1368" width="16" height="16"/>
+  <object id="217" name="Spike" gid="855" x="2793" y="1368" width="16" height="16"/>
+  <object id="57" name="Spike" gid="855" x="778.5" y="1368" width="16" height="16"/>
+  <object id="152" name="Spike" gid="855" x="2399.5" y="1368" width="16" height="16"/>
+  <object id="90" name="Spike" gid="855" x="1564" y="1368" width="16" height="16"/>
+  <object id="218" name="Spike" gid="855" x="3185" y="1368" width="16" height="16"/>
+  <object id="34" name="Spike" gid="855" x="207.5" y="1368" width="16" height="16"/>
+  <object id="173" name="Spike" gid="855" x="1828.5" y="1368" width="16" height="16"/>
+  <object id="111" name="Spike" gid="855" x="993" y="1368" width="16" height="16"/>
+  <object id="219" name="Spike" gid="855" x="2614" y="1368" width="16" height="16"/>
+  <object id="63" name="Spike" gid="855" x="599.5" y="1368" width="16" height="16"/>
+  <object id="153" name="Spike" gid="855" x="2220.5" y="1368" width="16" height="16"/>
+  <object id="91" name="Spike" gid="855" x="1385" y="1368" width="16" height="16"/>
+  <object id="220" name="Spike" gid="855" x="3006" y="1368" width="16" height="16"/>
+  <object id="39" name="Spike" gid="855" x="403.5" y="1368" width="16" height="16"/>
+  <object id="168" name="Spike" gid="855" x="2024.5" y="1368" width="16" height="16"/>
+  <object id="106" name="Spike" gid="855" x="1189" y="1368" width="16" height="16"/>
+  <object id="221" name="Spike" gid="855" x="2810" y="1368" width="16" height="16"/>
+  <object id="58" name="Spike" gid="855" x="795.5" y="1368" width="16" height="16"/>
+  <object id="154" name="Spike" gid="855" x="2416.5" y="1368" width="16" height="16"/>
+  <object id="92" name="Spike" gid="855" x="1581" y="1368" width="16" height="16"/>
+  <object id="222" name="Spike" gid="855" x="3202" y="1368" width="16" height="16"/>
+  <object id="35" name="Spike" gid="855" x="223" y="1368" width="16" height="16"/>
+  <object id="172" name="Spike" gid="855" x="1844" y="1368" width="16" height="16"/>
+  <object id="110" name="Spike" gid="855" x="1008.5" y="1368" width="16" height="16"/>
+  <object id="223" name="Spike" gid="855" x="2629.5" y="1368" width="16" height="16"/>
+  <object id="62" name="Spike" gid="855" x="615" y="1368" width="16" height="16"/>
+  <object id="155" name="Spike" gid="855" x="2236" y="1368" width="16" height="16"/>
+  <object id="93" name="Spike" gid="855" x="1400.5" y="1368" width="16" height="16"/>
+  <object id="224" name="Spike" gid="855" x="3021.5" y="1368" width="16" height="16"/>
+  <object id="38" name="Spike" gid="855" x="419" y="1368" width="16" height="16"/>
+  <object id="169" name="Spike" gid="855" x="2040" y="1368" width="16" height="16"/>
+  <object id="107" name="Spike" gid="855" x="1204.5" y="1368" width="16" height="16"/>
+  <object id="225" name="Spike" gid="855" x="2825.5" y="1368" width="16" height="16"/>
+  <object id="59" name="Spike" gid="855" x="811" y="1368" width="16" height="16"/>
+  <object id="156" name="Spike" gid="855" x="2432" y="1368" width="16" height="16"/>
+  <object id="94" name="Spike" gid="855" x="1596.5" y="1368" width="16" height="16"/>
+  <object id="226" name="Spike" gid="855" x="3217.5" y="1368" width="16" height="16"/>
+  <object id="36" name="Spike" gid="855" x="238.5" y="1368" width="16" height="16"/>
+  <object id="171" name="Spike" gid="855" x="1859.5" y="1368" width="16" height="16"/>
+  <object id="109" name="Spike" gid="855" x="1024" y="1368" width="16" height="16"/>
+  <object id="227" name="Spike" gid="855" x="2645" y="1368" width="16" height="16"/>
+  <object id="61" name="Spike" gid="855" x="630.5" y="1368" width="16" height="16"/>
+  <object id="157" name="Spike" gid="855" x="2251.5" y="1368" width="16" height="16"/>
+  <object id="95" name="Spike" gid="855" x="1416" y="1368" width="16" height="16"/>
+  <object id="228" name="Spike" gid="855" x="3037" y="1368" width="16" height="16"/>
+  <object id="37" name="Spike" gid="855" x="434.5" y="1368" width="16" height="16"/>
+  <object id="170" name="Spike" gid="855" x="2055.5" y="1368" width="16" height="16"/>
+  <object id="108" name="Spike" gid="855" x="1220" y="1368" width="16" height="16"/>
+  <object id="229" name="Spike" gid="855" x="2841" y="1368" width="16" height="16"/>
+  <object id="60" name="Spike" gid="855" x="826.5" y="1368" width="16" height="16"/>
+  <object id="158" name="Spike" gid="855" x="2447.5" y="1368" width="16" height="16"/>
+  <object id="96" name="Spike" gid="855" x="1612" y="1368" width="16" height="16"/>
+  <object id="230" name="Spike" gid="855" x="3233" y="1368" width="16" height="16"/>
+  <object id="289" name="Coin" x="533.333" y="1102.67">
+   <point/>
+  </object>
+  <object id="290" name="Enermy_2" x="1686.67" y="1110" width="145.333" height="102.667"/>
+  <object id="293" name="Coin" x="811.333" y="998.667">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Dust">
   <object id="124" gid="2" x="315" y="1127.5" width="32" height="32"/>
@@ -471,15 +476,16 @@
   <object id="260" gid="2" x="1520" y="1190" width="32" height="32"/>
   <object id="261" gid="2" x="1550" y="1190" width="32" height="32"/>
   <object id="262" gid="2" x="1580.5" y="1190" width="32" height="32"/>
-  <object id="270" gid="2" x="1681" y="1245.5" width="32" height="32"/>
-  <object id="271" gid="2" x="1710.5" y="1245.5" width="32" height="32"/>
-  <object id="272" gid="2" x="1739" y="1245.5" width="32" height="32"/>
-  <object id="273" gid="2" x="1767.5" y="1245.5" width="32" height="32"/>
+  <object id="270" gid="2" x="1681" y="1245" width="32" height="32"/>
+  <object id="271" gid="2" x="1710.5" y="1245" width="32" height="32"/>
+  <object id="272" gid="2" x="1739" y="1245" width="32" height="32"/>
+  <object id="292" gid="2" x="1776.33" y="1245" width="32" height="32"/>
+  <object id="273" gid="2" x="1767.5" y="1245" width="32" height="32"/>
+  <object id="291" gid="2" x="1804.83" y="1245" width="32" height="32"/>
   <object id="275" gid="2" x="1908.5" y="1056.5" width="32" height="32"/>
   <object id="276" gid="2" x="1939" y="1056.5" width="32" height="32"/>
   <object id="277" gid="2" x="1969.5" y="1056.5" width="32" height="32"/>
   <object id="278" gid="2" x="2000" y="1056.5" width="32" height="32"/>
-  <object id="279" gid="856" x="1882.5" y="1070" width="32" height="32"/>
   <object id="281" gid="34" x="1137.33" y="956.667" width="32" height="32"/>
   <object id="282" gid="34" x="1168" y="957.333" width="32" height="32"/>
   <object id="283" gid="34" x="1200" y="956.667" width="32" height="32"/>

@@ -77,7 +77,7 @@ class Enermy_2(Enermy):
         self.main_rect = rect   #hình chữ nhật giới hạn di chuyển
         self.hitbox_rect = self.rect.inflate(-10, -0)
         self.hitbox_attack = pygame.Rect((0,0), (50, self.hitbox_rect.height)) 
-        self.speed = 100
+        self.speed = 200
         self.direction = 0
         self.follow = False
         self.is_enermy = True
@@ -453,3 +453,8 @@ class Dust_canmove_vertical(AnimatedSprite):
             self.check_flip()
         elif self.func == "loop":
             self.destroy()
+
+class Spike(Sprites):
+    def __init__(self, pos, surf, groups):
+        super().__init__(pos, surf, groups)
+        self.hitbox_rect = self.rect.inflate(0, -20)
