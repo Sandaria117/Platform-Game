@@ -22,10 +22,10 @@ Người chơi sẽ điều khiển nhân vật di chuyển trên bản đồ, n
    pip install pygame
    pip install pytmx
 2. Clone re
-   git clone https://github.com/Sandaria117/Platform-Game.git
-   cd Platform-Game
+- git clone https://github.com/Sandaria117/Platform-Game.git
+- cd Platform-Game
 3. Chạy Game
-   python code/main.py
+- python code/main.py
 
 ---
 
