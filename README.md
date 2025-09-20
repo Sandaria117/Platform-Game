@@ -1,4 +1,3 @@
-# Platform-Game
 
 <img width="800" alt="screenshot" src="https://github.com/user-attachments/assets/5b9abe6e-3191-47b1-9a2a-f1b463b879e4" />
 
