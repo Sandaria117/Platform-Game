@@ -30,5 +30,5 @@ Người chơi sẽ điều khiển nhân vật di chuyển trên bản đồ, n
 ---
 
 ## Cách chơi
-  Di chuyển theo mũi tên, tấn công bằng Q
-  Mục tiêu: Hoàn thành màn chơi bằng việc thu thập coin, hạ gục quái để đủ điểm yêu cầu
+- Di chuyển theo mũi tên, tấn công bằng Q
+- Mục tiêu: Hoàn thành màn chơi bằng việc thu thập coin, hạ gục quái để đủ điểm yêu cầu
