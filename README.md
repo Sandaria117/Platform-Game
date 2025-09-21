@@ -9,7 +9,7 @@ Người chơi sẽ điều khiển nhân vật di chuyển trên bản đồ, n
 
 ## Công nghệ sử dụng
 -  **Python**  
--  **Pygame** để xây dựng gameplay, xử lý nhân vật và va chạm  
+-  **Pygame** để xây dựng gameplay
 -  **Tiled Map Editor** để thiết kế bản đồ  
 -  **PyTMX** để load map `.tmx` từ Tiled vào game  
 
